@@ -1,6 +1,10 @@
 import React from "react";
 import styled from "styled-components";
 
+// Redux
+import { Provider } from "react-redux";
+import store from "../../store";
+
 import Sidebar from "../sidebar/Sidebar";
 import TopBar from "../topbar/TopBar";
 import Board from "../board/Board";
@@ -19,13 +23,15 @@ const MainContainer = styled.div`
 
 const App = () => {
   return (
-    <AppContainer>
-      <Sidebar />
-      <MainContainer>
-        <TopBar />
-        <Board />
-      </MainContainer>
-    </AppContainer>
+    <Provider store={store}>
+      <AppContainer>
+        <Sidebar />
+        <MainContainer>
+          <TopBar />
+          <Board />
+        </MainContainer>
+      </AppContainer>
+    </Provider>
   );
 };
 
