@@ -1,6 +1,6 @@
-import React, { useState } from "react";
+import React from "react";
 import { connect } from "react-redux";
-import styled from "styled-components";
+import styled from "styled-components/macro";
 import { DragDropContext, Droppable } from "react-beautiful-dnd";
 
 import {
@@ -9,7 +9,7 @@ import {
   setTaskInSameColumn,
   setTaskInNewColumn
 } from "../../actions/board";
-import initialData from "../../initial-data";
+
 import Column from "./Column";
 
 const Container = styled.div`
@@ -36,88 +36,6 @@ const Board = ({
   setTaskInSameColumn,
   setTaskInNewColumn
 }) => {
-  const [state, setState] = useState(initialData);
-  // state = initialData;
-
-  // const onDragEnd = result => {
-  //   const { destination, source, draggableId, type } = result;
-
-  //   if (!destination) {
-  //     return;
-  //   }
-
-  //   if (
-  //     destination.droppableId === source.droppableId &&
-  //     destination.index === source.index
-  //   ) {
-  //     return;
-  //   }
-
-  //   if (type === "column") {
-  //     const newColumnOrder = Array.from(state.columnOrder);
-  //     newColumnOrder.splice(source.index, 1);
-  //     newColumnOrder.splice(destination.index, 0, draggableId);
-
-  //     const newState = {
-  //       ...state,
-  //       columnOrder: newColumnOrder
-  //     };
-  //     setState(newState);
-  //     return;
-  //   }
-
-  //   const start = state.columns[source.droppableId];
-  //   const finish = state.columns[destination.droppableId];
-
-  //   // Moving within one list
-  //   if (start === finish) {
-  //     const newTaskIds = Array.from(start.taskIds);
-  //     newTaskIds.splice(source.index, 1);
-  //     newTaskIds.splice(destination.index, 0, draggableId);
-
-  //     const newColumn = {
-  //       ...start,
-  //       taskIds: newTaskIds
-  //     };
-
-  //     const newState = {
-  //       ...state,
-  //       columns: {
-  //         ...state.columns,
-  //         [newColumn.id]: newColumn
-  //       }
-  //     };
-
-  //     setState(newState);
-  //     return;
-  //   }
-
-  //   // Moving from one list to another
-  //   const startTaskIds = Array.from(start.taskIds);
-  //   startTaskIds.splice(source.index, 1);
-  //   const newStart = {
-  //     ...start,
-  //     taskIds: startTaskIds
-  //   };
-
-  //   const finishTaskIds = Array.from(finish.taskIds);
-  //   finishTaskIds.splice(destination.index, 0, draggableId);
-  //   const newFinish = {
-  //     ...finish,
-  //     taskIds: finishTaskIds
-  //   };
-
-  //   const newState = {
-  //     ...state,
-  //     columns: {
-  //       ...state.columns,
-  //       [newStart.id]: newStart,
-  //       [newFinish.id]: newFinish
-  //     }
-  //   };
-  //   setState(newState);
-  // };
-
   const onDragEnd = result => {
     const { destination, source, draggableId, type } = result;
 
@@ -178,16 +96,6 @@ const Board = ({
     };
 
     setTaskInNewColumn(newStart, newFinish);
-
-    // const newState = {
-    //   ...state,
-    //   columns: {
-    //     ...state.columns,
-    //     [newStart.id]: newStart,
-    //     [newFinish.id]: newFinish
-    //   }
-    // };
-    // setState(newState);
   };
 
   return (
@@ -195,20 +103,6 @@ const Board = ({
       <Droppable droppableId="all-columns" direction="horizontal" type="column">
         {provided => (
           <Container {...provided.droppableProps} ref={provided.innerRef}>
-            {/* <InnerListContainer>
-              {state.columnOrder.map((columnId, index) => {
-                const column = state.columns[columnId];
-                return (
-                  <InnerList
-                    key={column.id}
-                    column={column}
-                    taskMap={state.tasks}
-                    index={index}
-                  />
-                );
-              })}
-              {provided.placeholder}
-            </InnerListContainer> */}
             <InnerListContainer>
               {boardState.columnOrder.map((columnId, index) => {
                 const column = boardState.columns[columnId];
@@ -236,5 +130,10 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  { getBoard, setColumnOrder, setTaskInSameColumn, setTaskInNewColumn }
+  {
+    getBoard,
+    setColumnOrder,
+    setTaskInSameColumn,
+    setTaskInNewColumn
+  }
 )(Board);

@@ -2,7 +2,8 @@ import {
   GET_BOARD,
   SET_COLUMN_ORDER,
   SET_TASK_IN_SAME_COLUMN,
-  SET_TASK_IN_NEW_COLUMN
+  SET_TASK_IN_NEW_COLUMN,
+  SET_COLUMN_TITLE
 } from "../actions/types";
 
 const initialState = {
@@ -63,6 +64,20 @@ export default function(state = initialState, action) {
           [finishColumn.id]: finishColumn
         }
       };
+    case SET_COLUMN_TITLE:
+      const { title, column } = payload;
+      const { id } = column;
+      return {
+        ...state,
+        columns: {
+          ...state.columns,
+          [id]: {
+            ...state.columns[id],
+            title
+          }
+        }
+      };
+
     default:
       return state;
   }

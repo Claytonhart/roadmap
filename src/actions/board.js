@@ -2,7 +2,8 @@ import {
   GET_BOARD,
   SET_COLUMN_ORDER,
   SET_TASK_IN_SAME_COLUMN,
-  SET_TASK_IN_NEW_COLUMN
+  SET_TASK_IN_NEW_COLUMN,
+  SET_COLUMN_TITLE
 } from "./types";
 
 import initialData from "../initial-data";
@@ -34,6 +35,16 @@ export const setTaskInNewColumn = (startColumn, finishColumn) => {
     payload: {
       startColumn,
       finishColumn
+    }
+  };
+};
+
+export const setColumnTitle = (title, column) => {
+  return {
+    type: SET_COLUMN_TITLE,
+    payload: {
+      title,
+      column
     }
   };
 };
