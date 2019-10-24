@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components/macro";
 import { Droppable, Draggable } from "react-beautiful-dnd";
-import Task from "./Task";
+import Task from "./task/Task";
 import ColumnTitle from "./ColumnTitle";
 
 const Container = styled.div`

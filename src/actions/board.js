@@ -3,7 +3,9 @@ import {
   SET_COLUMN_ORDER,
   SET_TASK_IN_SAME_COLUMN,
   SET_TASK_IN_NEW_COLUMN,
-  SET_COLUMN_TITLE
+  SET_COLUMN_TITLE,
+  UPDATE_EXISTING_TASK,
+  CREATE_NEW_TASK
 } from "./types";
 
 import initialData from "../initial-data";
@@ -46,5 +48,22 @@ export const setColumnTitle = (title, column) => {
       title,
       column
     }
+  };
+};
+
+export const updateExistingTask = (task, content) => {
+  return {
+    type: UPDATE_EXISTING_TASK,
+    payload: {
+      task,
+      content
+    }
+  };
+};
+
+export const createNewTask = task => {
+  return {
+    type: CREATE_NEW_TASK,
+    payload: task
   };
 };

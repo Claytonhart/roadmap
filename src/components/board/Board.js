@@ -10,7 +10,7 @@ import {
   setTaskInNewColumn
 } from "../../actions/board";
 
-import Column from "./Column";
+import Column from "./column/Column";
 
 const Container = styled.div`
   display: flex;

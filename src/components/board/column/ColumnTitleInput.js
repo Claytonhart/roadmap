@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components/macro";
 import { connect } from "react-redux";
-import { setColumnTitle } from "../../actions/board";
+import { setColumnTitle } from "../../../actions/board";
 
-import onEscOrClickOutside from "../../utils/onEscOrClickOutside";
+import onEscOrClickOutside from "../../../utils/onEscOrClickOutside";
 
 const TitleForm = styled.form`
   display: flex;
@@ -28,7 +28,7 @@ const TitleInput = styled.input`
   border-radius: 5px 5px 0 0;
 `;
 
-const ColumTitleInput = ({ column, setIsSelected, setColumnTitle }) => {
+const ColumnTitleInput = ({ column, setIsSelected, setColumnTitle }) => {
   const { title } = column;
   const [inputValue, setInputValue] = useState(title);
 
@@ -67,4 +67,4 @@ const ColumTitleInput = ({ column, setIsSelected, setColumnTitle }) => {
 export default connect(
   null,
   { setColumnTitle }
-)(ColumTitleInput);
+)(ColumnTitleInput);

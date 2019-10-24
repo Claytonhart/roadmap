@@ -1,14 +1,8 @@
 import React from "react";
-import styled from "styled-components/macro";
 import { Draggable } from "react-beautiful-dnd";
 
-const Container = styled.div`
-  border: 1px solid lightgrey;
-  border-radius: 2px;
-  padding: 8px;
-  margin-bottom: 8px;
-  background-color: ${props => (props.isDragging ? "lightgreen" : "white")};
-`;
+import TaskEditButton from "./TaskEditButton";
+import { Container, Content } from "./styles";
 
 const Task = props => {
   return (
@@ -20,7 +14,8 @@ const Task = props => {
           ref={provided.innerRef}
           isDragging={snapshot.isDragging}
         >
-          {props.task.content}
+          <Content>{props.task.content}</Content>
+          <TaskEditButton task={props.task} />
         </Container>
       )}
     </Draggable>

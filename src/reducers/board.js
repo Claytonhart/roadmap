@@ -3,7 +3,8 @@ import {
   SET_COLUMN_ORDER,
   SET_TASK_IN_SAME_COLUMN,
   SET_TASK_IN_NEW_COLUMN,
-  SET_COLUMN_TITLE
+  SET_COLUMN_TITLE,
+  UPDATE_EXISTING_TASK
 } from "../actions/types";
 
 const initialState = {
@@ -40,12 +41,13 @@ export default function(state = initialState, action) {
   switch (type) {
     case GET_BOARD:
       return payload;
-    case SET_COLUMN_ORDER:
+    case SET_COLUMN_ORDER: {
       return {
         ...state,
         columnOrder: payload
       };
-    case SET_TASK_IN_SAME_COLUMN:
+    }
+    case SET_TASK_IN_SAME_COLUMN: {
       return {
         ...state,
         columns: {
@@ -53,7 +55,8 @@ export default function(state = initialState, action) {
           [payload.id]: payload
         }
       };
-    case SET_TASK_IN_NEW_COLUMN:
+    }
+    case SET_TASK_IN_NEW_COLUMN: {
       const { startColumn, finishColumn } = payload;
 
       return {
@@ -64,9 +67,11 @@ export default function(state = initialState, action) {
           [finishColumn.id]: finishColumn
         }
       };
-    case SET_COLUMN_TITLE:
+    }
+    case SET_COLUMN_TITLE: {
       const { title, column } = payload;
       const { id } = column;
+
       return {
         ...state,
         columns: {
@@ -77,7 +82,22 @@ export default function(state = initialState, action) {
           }
         }
       };
+    }
+    case UPDATE_EXISTING_TASK: {
+      const { task, content } = payload;
+      const { id } = task;
 
+      return {
+        ...state,
+        tasks: {
+          ...state.tasks,
+          [id]: {
+            ...state.tasks[id],
+            content
+          }
+        }
+      };
+    }
     default:
       return state;
   }

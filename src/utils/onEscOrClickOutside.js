@@ -14,8 +14,6 @@ const onEscOrClickOutside = (callback, element) => {
     }
   };
 
-  document.addEventListener("mousedown", outsideClickListener);
-
   const onClose = () => {
     document.removeEventListener("keydown", keydownHandler);
     document.removeEventListener("mousedown", outsideClickListener);

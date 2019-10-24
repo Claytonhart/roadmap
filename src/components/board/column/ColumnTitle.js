@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import styled from "styled-components/macro";
 
-import ColumnTitleInput from "./ColumTitleInput";
+import ColumnTitleInput from "./ColumnTitleInput";
 
 const ColumnTitleContainer = styled.div`
   min-height: 61px;
