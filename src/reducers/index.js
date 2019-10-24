@@ -1,5 +1,6 @@
 import { combineReducers } from "redux";
+import board from "./board";
 
 export default combineReducers({
-  state1: () => ({ reduxStateKey1: "key1" })
+  board
 });
