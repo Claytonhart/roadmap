@@ -15,7 +15,7 @@ import {
   ModalForm
 } from "./styles";
 
-const TaskEditModal = ({
+const TaskModal = ({
   isVisible = false,
   title,
   content,
@@ -70,4 +70,4 @@ const TaskEditModal = ({
 export default connect(
   null,
   { updateExistingTask }
-)(TaskEditModal);
+)(TaskModal);

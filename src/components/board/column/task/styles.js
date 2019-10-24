@@ -18,12 +18,13 @@ export const Container = styled.div`
 `;
 
 export const Content = styled.div`
-  /*  */
+  cursor: pointer;
 `;
 
 // TaskEditButton
 
 export const IconContainer = styled.span`
+  cursor: pointer;
   opacity: 0;
   color: grey;
   transition: opacity 0.2s;
@@ -118,8 +119,10 @@ export const ModalTitle = styled.input`
 `;
 
 export const ModalClose = styled.span`
+  font-size: 50px;
+  line-height: 1;
   cursor: pointer;
-  padding: 1rem;
+  padding: 0 2rem;
   margin: -1rem -1rem -1rem auto;
 `;
 

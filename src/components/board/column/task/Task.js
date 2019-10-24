@@ -1,21 +1,35 @@
-import React from "react";
+import React, { useState } from "react";
 import { Draggable } from "react-beautiful-dnd";
 
 import TaskEditButton from "./TaskEditButton";
+import TaskModal from "./TaskModal";
 import { Container, Content } from "./styles";
 
-const Task = props => {
+const Task = ({ task, index }) => {
+  const [modalShow, setModalShow] = useState(false);
+
+  const showModal = () => {
+    setModalShow(true);
+  };
+
   return (
-    <Draggable draggableId={props.task.id} index={props.index}>
+    <Draggable draggableId={task.id} index={index}>
       {(provided, snapshot) => (
         <Container
           {...provided.draggableProps}
           {...provided.dragHandleProps}
           ref={provided.innerRef}
           isDragging={snapshot.isDragging}
+          onClick={showModal}
         >
-          <Content>{props.task.content}</Content>
-          <TaskEditButton task={props.task} />
+          <Content>{task.content}</Content>
+          <TaskEditButton />
+          <TaskModal
+            isVisible={modalShow}
+            title={task.content}
+            task={task}
+            onClose={() => setModalShow(false)}
+          />
         </Container>
       )}
     </Draggable>
