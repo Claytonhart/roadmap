@@ -4,7 +4,8 @@ import {
   SET_TASK_IN_SAME_COLUMN,
   SET_TASK_IN_NEW_COLUMN,
   SET_COLUMN_TITLE,
-  UPDATE_EXISTING_TASK
+  UPDATE_EXISTING_TASK,
+  CREATE_NEW_TASK
 } from "../actions/types";
 
 const initialState = {
@@ -94,6 +95,28 @@ export default function(state = initialState, action) {
           [id]: {
             ...state.tasks[id],
             content
+          }
+        }
+      };
+    }
+    case CREATE_NEW_TASK: {
+      const { column, content } = payload;
+      const { id } = column;
+
+      return {
+        ...state,
+        tasks: {
+          ...state.tasks,
+          "new-id": {
+            id: "new-id",
+            content
+          }
+        },
+        columns: {
+          ...state.columns,
+          [id]: {
+            ...state.columns[id],
+            taskIds: ["new-id", ...state.columns[id].taskIds]
           }
         }
       };

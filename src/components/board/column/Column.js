@@ -3,6 +3,7 @@ import styled from "styled-components/macro";
 import { Droppable, Draggable } from "react-beautiful-dnd";
 import Task from "./task/Task";
 import ColumnTitle from "./ColumnTitle";
+import AddNewTaskButton from "./AddNewTaskButton";
 
 const Container = styled.div`
   margin: 8px;
@@ -17,11 +18,17 @@ const Container = styled.div`
 `;
 
 const TaskList = styled.div`
-  padding: 8px;
   transition: background-color 0.2s ease;
   background-color: ${props => (props.isDraggingOver ? "skyblue" : "inherit")};
   flex-grow: 1;
   min-height: 100px;
+`;
+
+const ColumnTasksContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  padding: 8px;
 `;
 
 const InnerList = React.memo(props => {
@@ -36,18 +43,21 @@ const Column = ({ column, tasks, index }) => {
       {provided => (
         <Container {...provided.draggableProps} ref={provided.innerRef}>
           <ColumnTitle provided={provided} column={column} />
-          <Droppable droppableId={column.id} type="task">
-            {(provided, snapshot) => (
-              <TaskList
-                ref={provided.innerRef}
-                {...provided.droppableProps}
-                isDraggingOver={snapshot.isDraggingOver}
-              >
-                <InnerList tasks={tasks} />
-                {provided.placeholder}
-              </TaskList>
-            )}
-          </Droppable>
+          <ColumnTasksContainer>
+            <AddNewTaskButton column={column} />
+            <Droppable droppableId={column.id} type="task">
+              {(provided, snapshot) => (
+                <TaskList
+                  ref={provided.innerRef}
+                  {...provided.droppableProps}
+                  isDraggingOver={snapshot.isDraggingOver}
+                >
+                  <InnerList tasks={tasks} />
+                  {provided.placeholder}
+                </TaskList>
+              )}
+            </Droppable>
+          </ColumnTasksContainer>
         </Container>
       )}
     </Draggable>

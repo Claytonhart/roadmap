@@ -24,11 +24,12 @@ const InnerListContainer = styled.div`
   display: flex;
 `;
 
-const InnerList = React.memo(props => {
+const InnerList = props => {
   const { column, taskMap, index } = props;
+
   const tasks = column.taskIds.map(taskId => taskMap[taskId]);
   return <Column column={column} tasks={tasks} index={index} />;
-});
+};
 
 const Board = ({
   boardState,

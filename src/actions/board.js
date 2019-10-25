@@ -61,9 +61,12 @@ export const updateExistingTask = (task, content) => {
   };
 };
 
-export const createNewTask = task => {
+export const createNewTask = (column, content) => {
   return {
     type: CREATE_NEW_TASK,
-    payload: task
+    payload: {
+      column,
+      content
+    }
   };
 };
