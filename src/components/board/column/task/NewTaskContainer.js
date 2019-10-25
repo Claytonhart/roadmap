@@ -40,6 +40,7 @@ const NewTaskContainer = ({ column, setIsActive, createNewTask }) => {
           type="text"
           value={inputValue}
           onChange={e => setInputValue(e.target.value)}
+          autoFocus
         />
       </NewTaskForm>
     </NewTask>
