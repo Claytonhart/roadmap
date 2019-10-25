@@ -6,7 +6,8 @@ import {
   SET_COLUMN_TITLE,
   UPDATE_EXISTING_TASK,
   CREATE_NEW_TASK,
-  DELETE_TASK
+  DELETE_TASK,
+  DELETE_COLUMN
 } from "../actions/types";
 
 const initialState = {
@@ -155,6 +156,46 @@ export default function(state = initialState, action) {
             taskIds: newTaskIds
           }
         }
+      };
+
+      return newState;
+    }
+    case DELETE_COLUMN: {
+      const column = payload;
+      const columnId = column.id;
+      // array of taskIds
+      const taskIdsToDelete = [...state.columns[columnId].taskIds];
+
+      // array of column ids in order
+      const newColumnOrder = state.columnOrder.filter(item => {
+        return item !== columnId;
+      });
+
+      // creates an array of state.columns keys, and removes column
+      const newColumns = Object.keys(state.columns).reduce((object, key) => {
+        if (key !== columnId) {
+          object[key] = state.columns[key];
+        }
+        return object;
+      }, {});
+
+      // Create an array of state.tasks keys, removing each one that
+      // matches an element in the taskIdsToDelete array of strings of taskIds
+      const newTasks = JSON.parse(JSON.stringify(state.tasks));
+
+      taskIdsToDelete.forEach(task => {
+        delete newTasks[task];
+      });
+
+      const newState = {
+        ...state,
+        tasks: {
+          ...newTasks
+        },
+        columns: {
+          ...newColumns
+        },
+        columnOrder: newColumnOrder
       };
 
       return newState;

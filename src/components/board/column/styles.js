@@ -32,18 +32,33 @@ export const ColumnTitleContainer = styled.div`
   min-height: 61px;
   border-bottom: 2px solid #151b26;
   z-index: 2;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+`;
+
+export const ColumnTitleIconContainer = styled.span`
+  cursor: pointer;
+  opacity: 0;
+  color: grey;
+  transition: opacity 0.2s;
 `;
 
 export const Title = styled.h3`
   padding: 16px;
+  flex: 1;
+
+  display: flex;
+  justify-content: space-between;
+
+  &:hover > span {
+    opacity: 1;
+  }
 `;
 
 // ColumnTitleInput
-export const TitleForm = styled.form`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-`;
+export const TitleForm = styled.form``;
 
 export const TitleInput = styled.input`
   padding: 16px;
