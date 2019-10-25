@@ -1,17 +1,8 @@
 import React, { useState } from "react";
-import styled from "styled-components/macro";
 
 import ColumnTitleInput from "./ColumnTitleInput";
 
-const ColumnTitleContainer = styled.div`
-  min-height: 61px;
-  border-bottom: 2px solid #151b26;
-  z-index: 2;
-`;
-
-const Title = styled.h3`
-  padding: 16px;
-`;
+import { Title, ColumnTitleContainer } from "./styles";
 
 const ColumnTitle = ({ column, provided }) => {
   const { title } = column;
