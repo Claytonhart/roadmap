@@ -11,6 +11,7 @@ import {
 } from "../../actions/board";
 
 import Column from "./column/Column";
+import NewColumn from "./newColumn/NewColumn";
 
 const Container = styled.div`
   display: flex;
@@ -118,6 +119,7 @@ const Board = ({
               })}
               {provided.placeholder}
             </InnerListContainer>
+            <NewColumn />
           </Container>
         )}
       </Droppable>

@@ -7,7 +7,8 @@ import {
   UPDATE_EXISTING_TASK,
   CREATE_NEW_TASK,
   DELETE_TASK,
-  DELETE_COLUMN
+  DELETE_COLUMN,
+  CREATE_NEW_COLUMN
 } from "../actions/types";
 
 const initialState = {
@@ -200,6 +201,22 @@ export default function(state = initialState, action) {
 
       return newState;
     }
+    case CREATE_NEW_COLUMN:
+      const title = payload;
+      const newColumnId = "new-column-id";
+
+      return {
+        ...state,
+        columns: {
+          ...state.columns,
+          [newColumnId]: {
+            id: newColumnId,
+            title,
+            taskIds: []
+          }
+        },
+        columnOrder: [...state.columnOrder, newColumnId]
+      };
     default:
       return state;
   }

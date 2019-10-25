@@ -7,7 +7,8 @@ import {
   UPDATE_EXISTING_TASK,
   CREATE_NEW_TASK,
   DELETE_TASK,
-  DELETE_COLUMN
+  DELETE_COLUMN,
+  CREATE_NEW_COLUMN
 } from "./types";
 
 import initialData from "../initial-data";
@@ -87,5 +88,12 @@ export const deleteColumn = column => {
   return {
     type: DELETE_COLUMN,
     payload: column
+  };
+};
+
+export const createNewColumn = title => {
+  return {
+    type: CREATE_NEW_COLUMN,
+    payload: title
   };
 };
