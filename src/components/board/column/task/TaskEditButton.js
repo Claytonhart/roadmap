@@ -1,11 +1,15 @@
 import React from "react";
+import { connect } from "react-redux";
+
+import { deleteTask } from "../../../../actions/board";
 
 import { IconContainer } from "./styles";
 
-const TaskEditButton = () => {
+const TaskEditButton = ({ task, column, deleteTask }) => {
   const showDropdown = e => {
     e.stopPropagation();
     console.log("clicked");
+    deleteTask(column, task);
   };
   return (
     <IconContainer onClick={showDropdown}>
@@ -14,4 +18,7 @@ const TaskEditButton = () => {
   );
 };
 
-export default TaskEditButton;
+export default connect(
+  null,
+  { deleteTask }
+)(TaskEditButton);

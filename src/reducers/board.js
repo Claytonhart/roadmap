@@ -5,7 +5,8 @@ import {
   SET_TASK_IN_NEW_COLUMN,
   SET_COLUMN_TITLE,
   UPDATE_EXISTING_TASK,
-  CREATE_NEW_TASK
+  CREATE_NEW_TASK,
+  DELETE_TASK
 } from "../actions/types";
 
 const initialState = {
@@ -120,6 +121,43 @@ export default function(state = initialState, action) {
           }
         }
       };
+    }
+    case DELETE_TASK: {
+      // takes column and task ids out as references
+      // column = ex. column-1, task = ex. task-1
+      const { column, task } = payload;
+      const columnId = column.id;
+      const taskId = task.id;
+
+      // returns an object with all keys except the one matching taskId
+      const newTasks = Object.keys(state.tasks).reduce((object, key) => {
+        if (key !== taskId) {
+          object[key] = state.tasks[key];
+        }
+        return object;
+      }, {});
+
+      // returns an array of strings, with the taskId filtered out
+      const newTaskIds = state.columns[columnId].taskIds.filter(item => {
+        return item !== taskId;
+      });
+
+      // construct new state with newTasks and newTaskIds
+      const newState = {
+        ...state,
+        tasks: {
+          ...newTasks
+        },
+        columns: {
+          ...state.columns,
+          [columnId]: {
+            ...state.columns[columnId],
+            taskIds: newTaskIds
+          }
+        }
+      };
+
+      return newState;
     }
     default:
       return state;

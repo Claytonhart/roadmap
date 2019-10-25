@@ -9,7 +9,7 @@ import AddNewTaskButton from "./newTask/AddNewTaskButton";
 
 const InnerList = React.memo(props => {
   return props.tasks.map((task, index) => (
-    <Task key={task.id} task={task} index={index} />
+    <Task key={task.id} task={task} index={index} column={props.column} />
   ));
 });
 
@@ -28,7 +28,7 @@ const Column = ({ column, tasks, index }) => {
                   {...provided.droppableProps}
                   isDraggingOver={snapshot.isDraggingOver}
                 >
-                  <InnerList tasks={tasks} />
+                  <InnerList tasks={tasks} column={column} />
                   {provided.placeholder}
                 </TaskList>
               )}

@@ -5,7 +5,7 @@ import TaskEditButton from "./TaskEditButton";
 import TaskModal from "./TaskModal";
 import { Container, Content } from "./styles";
 
-const Task = ({ task, index }) => {
+const Task = ({ task, index, column }) => {
   const [modalShow, setModalShow] = useState(false);
 
   const showModal = () => {
@@ -23,7 +23,7 @@ const Task = ({ task, index }) => {
           onClick={showModal}
         >
           <Content>{task.content}</Content>
-          <TaskEditButton />
+          <TaskEditButton task={task} column={column} />
           <TaskModal
             isVisible={modalShow}
             title={task.content}
