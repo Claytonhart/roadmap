@@ -19,6 +19,7 @@ const Container = styled.div`
   padding: 20px;
   background-color: #f6f8f9;
   align-items: flex-start;
+  overflow-x: auto;
 `;
 
 const InnerListContainer = styled.div`

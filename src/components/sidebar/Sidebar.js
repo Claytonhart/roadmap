@@ -4,6 +4,7 @@ import WorkspaceItem from "./workspaceItem/WorkspaceItem";
 
 const Container = styled.div`
   width: 244px;
+  min-width: 244px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
