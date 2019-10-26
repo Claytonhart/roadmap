@@ -1,24 +1,24 @@
-import React from "react";
-import { connect } from "react-redux";
-import { createNewColumn } from "../../../actions/board";
+import React, { useState } from "react";
+
+import NewColumnInput from "./NewColumnInput";
 
 import { Container, NewColumnTitle, NewColumnTitleContainer } from "./styles";
 
-const NewColumn = ({ createNewColumn }) => {
-  const createColumn = () => {
-    createNewColumn("New Column!");
-  };
+const NewColumn = () => {
+  const [isSelected, setIsSelected] = useState(false);
 
   return (
-    <Container onClick={createColumn}>
-      <NewColumnTitleContainer>
-        <NewColumnTitle>+ Add new column</NewColumnTitle>
+    // onClick={createColumn}
+    <Container>
+      <NewColumnTitleContainer onClick={() => setIsSelected(true)}>
+        {!isSelected ? (
+          <NewColumnTitle>&#43; Add new column</NewColumnTitle>
+        ) : (
+          <NewColumnInput setIsSelected={setIsSelected} />
+        )}
       </NewColumnTitleContainer>
     </Container>
   );
 };
 
-export default connect(
-  null,
-  { createNewColumn }
-)(NewColumn);
+export default NewColumn;

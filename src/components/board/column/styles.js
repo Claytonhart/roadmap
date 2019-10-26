@@ -67,7 +67,7 @@ export const TitleInput = styled.input`
   font-style: inherit;
   font-weight: 500;
   letter-spacing: -0.008em;
-  max-width: 100%;
+  width: 100%;
   border: none;
   outline: none;
   /* border-bottom: 2px solid #151b26; */
