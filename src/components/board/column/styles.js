@@ -65,14 +65,13 @@ export const TitleInput = styled.input`
   font-size: 1.4285714285714286em;
   font-family: inherit;
   font-style: inherit;
-  color: #172b4d;
   font-weight: 500;
   letter-spacing: -0.008em;
   max-width: 100%;
   border: none;
   outline: none;
   /* border-bottom: 2px solid #151b26; */
-  background-color: #151b26;
+  background-color: ${props => props.theme.primary.grey};
   color: #fff;
   border-radius: 5px 5px 0 0;
 `;

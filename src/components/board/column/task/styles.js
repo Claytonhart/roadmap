@@ -99,7 +99,7 @@ export const ModalForm = styled.form`
 
 export const ModalTitle = styled.input`
   font-family: inherit;
-  color: #172b4d;
+  color: ${props => props.theme.primary.grey};
   font-weight: 700;
   font-size: 24px;
   border: 1px solid transparent;
