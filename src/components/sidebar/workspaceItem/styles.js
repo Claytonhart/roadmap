@@ -2,7 +2,9 @@ import styled from "styled-components/macro";
 
 export const Container = styled.div`
   padding: 8px;
-  border-top: 1px solid ${props => props.theme.primary.lightgrey};
+  &:not(:first-of-type) {
+    border-top: 1px solid ${props => props.theme.primary.lightgrey};
+  }
 `;
 
 export const WorkspaceItemTitleContainer = styled.div`

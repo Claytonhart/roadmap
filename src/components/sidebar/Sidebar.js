@@ -31,23 +31,35 @@ const NavTitle = styled.div`
 const NavLinks = styled.div`
   margin-bottom: 10px;
   min-height: 100px;
-  border-bottom: 2px solid ${props => props.theme.primary.lightgrey};
 `;
 
 const NavContent = styled.div`
   margin-bottom: 10px;
   flex-grow: 1;
   border-bottom: 2px solid ${props => props.theme.primary.lightgrey};
+  overflow-y: auto;
+  overflow: -moz-scrollbars-none;
+  -ms-overflow-style: none;
+  &::-webkit-scrollbar {
+    width: 0 !important;
+  }
 `;
 
 const NavContentHeader = styled.h3`
+  border-bottom: 2px solid ${props => props.theme.primary.lightgrey};
   color: ${props => props.theme.primary.white};
-  margin-bottom: 10px;
+  padding-bottom: 8px;
 `;
 
 const NavFooter = styled.div`
-  margin-bottom: 10px;
+  margin-top: 20px;
+  margin-bottom: 20px;
   text-align: center;
+  cursor: pointer;
+
+  &:hover {
+    text-decoration: underline;
+  }
 `;
 
 const Sidebar = () => {
@@ -57,8 +69,170 @@ const Sidebar = () => {
         <NavTitle>Roadmap</NavTitle>
         <NavLinks>Links</NavLinks>
       </NavContainer>
+      <NavContentHeader>Your Workspaces</NavContentHeader>
       <NavContent>
-        <NavContentHeader>Your Workspaces</NavContentHeader>
+        <WorkspaceItem
+          title="Workspace 1"
+          people={[
+            {
+              color: "salmon",
+              initials: "CH"
+            },
+            {
+              color: "green",
+              initials: "JK"
+            },
+            {
+              color: "orange",
+              initials: "HI"
+            }
+          ]}
+          projects={[
+            {
+              color: "blue",
+              name: "Project 1"
+            },
+            {
+              color: "red",
+              name: "Project 2"
+            }
+          ]}
+        />
+        <WorkspaceItem
+          title="Workspace 2"
+          people={[
+            {
+              color: "orange",
+              initials: "DA"
+            },
+            {
+              color: "salmon",
+              initials: "WE"
+            },
+            {
+              color: "lightblue",
+              initials: "OM"
+            }
+          ]}
+          projects={[
+            {
+              color: "pink",
+              name: "Not Project 3"
+            },
+            {
+              color: "orange",
+              name: "Project 5"
+            }
+          ]}
+        />
+        <WorkspaceItem
+          title="Workspace 1"
+          people={[
+            {
+              color: "salmon",
+              initials: "CH"
+            },
+            {
+              color: "green",
+              initials: "JK"
+            },
+            {
+              color: "orange",
+              initials: "HI"
+            }
+          ]}
+          projects={[
+            {
+              color: "blue",
+              name: "Project 1"
+            },
+            {
+              color: "red",
+              name: "Project 2"
+            }
+          ]}
+        />
+        <WorkspaceItem
+          title="Workspace 2"
+          people={[
+            {
+              color: "orange",
+              initials: "DA"
+            },
+            {
+              color: "salmon",
+              initials: "WE"
+            },
+            {
+              color: "lightblue",
+              initials: "OM"
+            }
+          ]}
+          projects={[
+            {
+              color: "pink",
+              name: "Not Project 3"
+            },
+            {
+              color: "orange",
+              name: "Project 5"
+            }
+          ]}
+        />
+        <WorkspaceItem
+          title="Workspace 1"
+          people={[
+            {
+              color: "salmon",
+              initials: "CH"
+            },
+            {
+              color: "green",
+              initials: "JK"
+            },
+            {
+              color: "orange",
+              initials: "HI"
+            }
+          ]}
+          projects={[
+            {
+              color: "blue",
+              name: "Project 1"
+            },
+            {
+              color: "red",
+              name: "Project 2"
+            }
+          ]}
+        />
+        <WorkspaceItem
+          title="Workspace 2"
+          people={[
+            {
+              color: "orange",
+              initials: "DA"
+            },
+            {
+              color: "salmon",
+              initials: "WE"
+            },
+            {
+              color: "lightblue",
+              initials: "OM"
+            }
+          ]}
+          projects={[
+            {
+              color: "pink",
+              name: "Not Project 3"
+            },
+            {
+              color: "orange",
+              name: "Project 5"
+            }
+          ]}
+        />
         <WorkspaceItem
           title="Workspace 1"
           people={[
