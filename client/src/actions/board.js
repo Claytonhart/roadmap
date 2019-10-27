@@ -124,14 +124,47 @@ export const setTaskInSameColumn = taskOrder => async dispatch => {
   }
 };
 
-export const setTaskInNewColumn = (startColumn, finishColumn) => {
-  return {
-    type: SET_TASK_IN_NEW_COLUMN,
-    payload: {
-      startColumn,
-      finishColumn
-    }
-  };
+export const setTaskInNewColumn = (
+  startColumn,
+  finishColumn
+) => async dispatch => {
+  try {
+    const projectId = "5db53af211de1c625467b454";
+
+    const body = { startColumn, finishColumn };
+
+    const config = {
+      headers: {
+        "Content-Type": "application/json"
+      }
+    };
+
+    await dispatch({
+      type: SET_TASK_IN_NEW_COLUMN,
+      payload: {
+        startColumn,
+        finishColumn
+      }
+    });
+
+    const res = await axios.put(
+      `/api/project/${projectId}/setTaskInNewColumn`,
+      body,
+      config
+    );
+
+    console.log(res.data);
+  } catch (err) {
+    console.log(err);
+  }
+
+  // return {
+  //   type: SET_TASK_IN_NEW_COLUMN,
+  //   payload: {
+  //     startColumn,
+  //     finishColumn
+  //   }
+  // };
 };
 
 export const setColumnTitle = (title, column) => {

@@ -102,4 +102,42 @@ router.put("/:id/setTaskInSameColumn", async (req, res) => {
   }
 });
 
+// @route   PUT api/project/:id/setTaskInNewColumn
+// @desc    project route
+// @access  Public
+router.put("/:id/setTaskInNewColumn", async (req, res) => {
+  try {
+    const project = await Project.findById(req.params.id);
+
+    if (!project) {
+      return res.status(404).json({ msg: "Project not found" });
+    }
+
+    const { startColumn, finishColumn } = req.body;
+
+    const startId = startColumn.id;
+    const startTaskIds = startColumn.taskIds;
+
+    const finishId = finishColumn.id;
+    const finishTaskIds = finishColumn.taskIds;
+
+    // find the columns by id and set their taskIds to the new order
+    project.board.columns.forEach(column => {
+      if (column.id === startId) {
+        column.taskIds = startTaskIds;
+      }
+      if (column.id === finishId) {
+        column.taskIds = finishTaskIds;
+      }
+    });
+
+    await project.save();
+
+    res.json(project);
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send("Server Error");
+  }
+});
+
 module.exports = router;
