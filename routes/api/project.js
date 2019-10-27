@@ -140,4 +140,28 @@ router.put("/:id/setTaskInNewColumn", async (req, res) => {
   }
 });
 
+// @route   PUT api/project/:id/setColumnTitle
+// @desc    project route
+// @access  Public
+router.put("/:id/setColumnTitle", async (req, res) => {
+  const project = await Project.findById(req.params.id);
+
+  if (!project) {
+    return res.status(404).json({ msg: "Project not found" });
+  }
+
+  const { column, title } = req.body;
+  const { id } = column;
+
+  project.board.columns.forEach(column => {
+    if (column.id === id) {
+      column.title = title;
+    }
+  });
+
+  await project.save();
+
+  res.json(project);
+});
+
 module.exports = router;

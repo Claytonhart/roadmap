@@ -59,7 +59,7 @@ export const setColumnOrder = order => async dispatch => {
     const projectId = "5db53af211de1c625467b454";
 
     const body = { columnOrder: order };
-    // debugger;
+
     const config = {
       headers: {
         "Content-Type": "application/json"
@@ -70,8 +70,6 @@ export const setColumnOrder = order => async dispatch => {
       type: SET_COLUMN_ORDER,
       payload: order
     });
-
-    debugger;
 
     const res = await axios.put(
       `/api/project/${projectId}/setColumnOrder`,
@@ -157,24 +155,36 @@ export const setTaskInNewColumn = (
   } catch (err) {
     console.log(err);
   }
-
-  // return {
-  //   type: SET_TASK_IN_NEW_COLUMN,
-  //   payload: {
-  //     startColumn,
-  //     finishColumn
-  //   }
-  // };
 };
 
-export const setColumnTitle = (title, column) => {
-  return {
-    type: SET_COLUMN_TITLE,
-    payload: {
-      title,
-      column
-    }
-  };
+export const setColumnTitle = (title, column) => async dispatch => {
+  try {
+    const projectId = "5db53af211de1c625467b454";
+    const body = { title, column };
+
+    const config = {
+      headers: {
+        "Content-Type": "application/json"
+      }
+    };
+
+    await dispatch({
+      type: SET_COLUMN_TITLE,
+      payload: {
+        title,
+        column
+      }
+    });
+
+    const res = await axios.put(
+      `/api/project/${projectId}/setColumnTitle`,
+      body,
+      config
+    );
+    console.log(res.data);
+  } catch (err) {
+    console.log(err);
+  }
 };
 
 export const updateExistingTask = (task, content) => {
