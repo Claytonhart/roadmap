@@ -52,11 +52,11 @@ export default function(state = initialState, action) {
       // const { board, date, name, id } = payload;
       const { board } = payload;
       const newBoard = sanatizeBoardState(board);
-      debugger;
+      // debugger;
       console.log(newBoard);
 
       // return state;
-      return newBoard;
+      return newBoard || state;
     }
     case SET_COLUMN_ORDER: {
       return {

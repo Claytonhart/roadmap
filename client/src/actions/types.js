@@ -1,3 +1,4 @@
+// Board / Project
 export const GET_BOARD = "GET_BOARD";
 export const SET_COLUMN_ORDER = "SET_COLUMN_ORDER";
 export const SET_TASK_IN_SAME_COLUMN = "SET_TASK_IN_SAME_COLUMN";
@@ -9,3 +10,7 @@ export const DELETE_TASK = "DELETE_TASK";
 export const DELETE_COLUMN = "DELETE_COLUMN";
 export const CREATE_NEW_COLUMN = "CREATE_NEW_COLUMN";
 export const GET_BOARD_BY_ID = "GET_BOARD_BY_ID";
+
+// Alerts
+export const SET_ALERT = "SET_ALERT";
+export const REMOVE_ALERT = "REMOVE_ALERT";

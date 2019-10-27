@@ -1,5 +1,7 @@
 import axios from "axios";
 
+import { setAlert } from "./alert";
+
 import {
   GET_BOARD,
   SET_COLUMN_ORDER,
@@ -43,6 +45,11 @@ export const getBoardById = () => async dispatch => {
       }
     });
   } catch (err) {
+    const errors = err.response.data.errors;
+    if (errors) {
+      errors.forEach(error => dispatch(setAlert(error.msg, "danger")));
+    }
+
     console.log(err);
   }
 };
@@ -76,23 +83,45 @@ export const setColumnOrder = order => async dispatch => {
     const { columnOrder } = board;
 
     if (JSON.stringify(order) !== JSON.stringify(columnOrder)) {
+      // set error instead of forcing column change
       dispatch({
         type: SET_COLUMN_ORDER,
         payload: columnOrder
       });
     }
-  } catch (err) {}
-  // return {
-  //   type: SET_COLUMN_ORDER,
-  //   payload: order
-  // };
+  } catch (err) {
+    console.log(err);
+    console.log("set column order error");
+  }
 };
 
-export const setTaskInSameColumn = taskOrder => {
-  return {
-    type: SET_TASK_IN_SAME_COLUMN,
-    payload: taskOrder
-  };
+export const setTaskInSameColumn = taskOrder => async dispatch => {
+  try {
+    const projectId = "5db53af211de1c625467b454";
+
+    const body = { column: taskOrder };
+
+    const config = {
+      headers: {
+        "Content-Type": "application/json"
+      }
+    };
+
+    await dispatch({
+      type: SET_TASK_IN_SAME_COLUMN,
+      payload: taskOrder
+    });
+
+    const res = await axios.put(
+      `/api/project/${projectId}/setTaskInSameColumn`,
+      body,
+      config
+    );
+
+    console.log(res.data);
+  } catch (err) {
+    console.log(err);
+  }
 };
 
 export const setTaskInNewColumn = (startColumn, finishColumn) => {

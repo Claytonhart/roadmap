@@ -48,7 +48,7 @@ router.get("/:id", async (req, res) => {
   }
 });
 
-// @route   PUT api/project/:id/
+// @route   PUT api/project/:id/setColumnOrder
 // @desc    project route
 // @access  Public
 router.put("/:id/setColumnOrder", async (req, res) => {
@@ -62,6 +62,36 @@ router.put("/:id/setColumnOrder", async (req, res) => {
     const { columnOrder } = req.body;
 
     project.board.columnOrder = columnOrder;
+
+    await project.save();
+
+    res.json(project);
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send("Server Error");
+  }
+});
+
+// @route   PUT api/project/:id/setTaskInSameColumn
+// @desc    project route
+// @access  Public
+router.put("/:id/setTaskInSameColumn", async (req, res) => {
+  try {
+    const project = await Project.findById(req.params.id);
+
+    if (!project) {
+      return res.status(404).json({ msg: "Project not found" });
+    }
+
+    const { column } = req.body;
+    const { id, taskIds } = column;
+
+    // find the column by id and set its taskIds to the new order
+    project.board.columns.forEach(column => {
+      if (column.id === id) {
+        column.taskIds = taskIds;
+      }
+    });
 
     await project.save();
 
