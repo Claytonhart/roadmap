@@ -1,13 +1,13 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { connect } from "react-redux";
 import styled from "styled-components/macro";
 import { DragDropContext, Droppable } from "react-beautiful-dnd";
 
 import {
-  getBoard,
   setColumnOrder,
   setTaskInSameColumn,
-  setTaskInNewColumn
+  setTaskInNewColumn,
+  getBoardById
 } from "../../actions/board";
 
 import Column from "./column/Column";
@@ -30,6 +30,7 @@ const InnerList = props => {
   const { column, taskMap, index } = props;
 
   const tasks = column.taskIds.map(taskId => taskMap[taskId]);
+  // debugger;
   return <Column column={column} tasks={tasks} index={index} />;
 };
 
@@ -37,9 +38,14 @@ const Board = ({
   boardState,
   setColumnOrder,
   setTaskInSameColumn,
-  setTaskInNewColumn
+  setTaskInNewColumn,
+  getBoardById
 }) => {
-  const onDragEnd = result => {
+  useEffect(() => {
+    getBoardById();
+  }, [getBoardById]);
+
+  const onDragEnd = async result => {
     const { destination, source, draggableId, type } = result;
 
     // do nothing and return draggable to original position if no destination
@@ -61,7 +67,7 @@ const Board = ({
       newColumnOrder.splice(source.index, 1);
       newColumnOrder.splice(destination.index, 0, draggableId);
 
-      setColumnOrder(newColumnOrder);
+      await setColumnOrder(newColumnOrder);
       return;
     }
 
@@ -135,9 +141,9 @@ const mapStateToProps = state => ({
 export default connect(
   mapStateToProps,
   {
-    getBoard,
     setColumnOrder,
     setTaskInSameColumn,
-    setTaskInNewColumn
+    setTaskInNewColumn,
+    getBoardById
   }
 )(Board);

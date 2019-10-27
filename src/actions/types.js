@@ -8,3 +8,4 @@ export const CREATE_NEW_TASK = "CREATE_NEW_TASK";
 export const DELETE_TASK = "DELETE_TASK";
 export const DELETE_COLUMN = "DELETE_COLUMN";
 export const CREATE_NEW_COLUMN = "CREATE_NEW_COLUMN";
+export const GET_BOARD_BY_ID = "GET_BOARD_BY_ID";

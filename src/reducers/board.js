@@ -8,8 +8,11 @@ import {
   CREATE_NEW_TASK,
   DELETE_TASK,
   DELETE_COLUMN,
-  CREATE_NEW_COLUMN
+  CREATE_NEW_COLUMN,
+  GET_BOARD_BY_ID
 } from "../actions/types";
+
+import sanatizeBoardState from "../utils/sanatizeBoardState";
 
 const initialState = {
   tasks: {
@@ -45,6 +48,16 @@ export default function(state = initialState, action) {
   switch (type) {
     case GET_BOARD:
       return payload;
+    case GET_BOARD_BY_ID: {
+      // const { board, date, name, id } = payload;
+      const { board } = payload;
+      const newBoard = sanatizeBoardState(board);
+      debugger;
+      console.log(newBoard);
+
+      // return state;
+      return newBoard;
+    }
     case SET_COLUMN_ORDER: {
       return {
         ...state,
