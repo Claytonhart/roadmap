@@ -1,4 +1,8 @@
 import React from "react";
+import { connect } from "react-redux";
+
+import { getBoardById } from "../../../actions/board";
+import { createNewProject } from "../../../actions/project";
 import ProjectItem from "./projectItem/ProjectItem";
 
 import {
@@ -11,13 +15,23 @@ import {
   WorkspaceItemPerson
 } from "./styles";
 
-const WorkspaceItem = ({ title, people, projects }) => {
-  // also going to need to map over people, display circles with initials
+const WorkspaceItem = ({
+  title,
+  people,
+  projects,
+  createNewProject,
+  getBoardById
+}) => {
+  const createProject = async () => {
+    const id = await createNewProject("New Test Board");
+    getBoardById(id);
+  };
+
   return (
     <Container>
       <WorkspaceItemTitleContainer>
         <WorkspaceItemTitle>{title}</WorkspaceItemTitle>
-        <WorkspaceItemIcon onClick={() => console.log("delete workspace")}>
+        <WorkspaceItemIcon onClick={createProject}>
           <i className="fas fa-ellipsis-h"></i>
         </WorkspaceItemIcon>
       </WorkspaceItemTitleContainer>
@@ -41,4 +55,7 @@ const WorkspaceItem = ({ title, people, projects }) => {
   );
 };
 
-export default WorkspaceItem;
+export default connect(
+  null,
+  { createNewProject, getBoardById }
+)(WorkspaceItem);

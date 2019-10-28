@@ -29,9 +29,16 @@ export const getBoard = () => {
   };
 };
 
-export const getBoardById = () => async dispatch => {
+export const getBoardById = (
+  projectId = "5db53af211de1c625467b454"
+) => async dispatch => {
   try {
-    const projectId = "5db53af211de1c625467b454";
+    // const pathname = window.location.pathname;
+    // const pathnameArray = pathname.split("/");
+    // const testId = pathnameArray[2];
+    // debugger;
+    // const projectId = "5db53af211de1c625467b454";
+    // const projectId = "5db6c885ca1927252c249156";
 
     const res = await axios.get(`/api/project/${projectId}`);
     const { data } = res;
@@ -66,6 +73,10 @@ export const getBoardById = () => async dispatch => {
 export const setColumnOrder = order => async dispatch => {
   try {
     const projectId = "5db53af211de1c625467b454";
+
+    // const pathname = window.location.pathname;
+    // const pathnameArray = pathname.split("/");
+    // const testId = pathnameArray[2];
 
     const body = { columnOrder: order };
 

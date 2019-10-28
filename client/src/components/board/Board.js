@@ -40,7 +40,8 @@ const Board = ({
   setColumnOrder,
   setTaskInSameColumn,
   setTaskInNewColumn,
-  getBoardById
+  getBoardById,
+  projectId
 }) => {
   const [isLoading, setIsLoading] = useState(true);
   useEffect(() => {
@@ -146,7 +147,8 @@ const Board = ({
 };
 
 const mapStateToProps = state => ({
-  boardState: state.board
+  boardState: state.board,
+  projectId: state.project.id
 });
 
 export default connect(

@@ -17,3 +17,4 @@ export const REMOVE_ALERT = "REMOVE_ALERT";
 
 // Project
 export const SET_PROJECT_DATA = "SET_PROJECT_DATA";
+export const CREATE_NEW_PROJECT = "CREATE_NEW_PROJECT";

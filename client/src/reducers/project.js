@@ -1,4 +1,4 @@
-import { SET_PROJECT_DATA } from "../actions/types";
+import { SET_PROJECT_DATA, CREATE_NEW_PROJECT } from "../actions/types";
 
 const initialState = {
   name: null,
@@ -14,6 +14,14 @@ export default function(state = initialState, action) {
       return {
         ...state,
         ...payload
+      };
+    }
+    case CREATE_NEW_PROJECT: {
+      const id = payload;
+      debugger;
+      return {
+        ...state,
+        projectId: id
       };
     }
     default:
