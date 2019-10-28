@@ -238,6 +238,10 @@ router.delete("/:id/deleteTask/:columnId/:taskId", async (req, res) => {
   try {
     const project = await Project.findById(req.params.id);
 
+    if (!project) {
+      return res.status(404).json({ msg: "Project not found" });
+    }
+
     const taskId = req.params.taskId;
     const columnId = req.params.columnId;
 
@@ -258,6 +262,38 @@ router.delete("/:id/deleteTask/:columnId/:taskId", async (req, res) => {
         });
       }
     });
+
+    await project.save();
+
+    res.json(project);
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send("Server Error");
+  }
+});
+
+// @route   PUT api/project/:id/createColumn
+// @desc    project route
+// @access  Public
+router.put("/:id/createColumn", async (req, res) => {
+  try {
+    const project = await Project.findById(req.params.id);
+
+    if (!project) {
+      return res.status(404).json({ msg: "Project not found" });
+    }
+
+    const { columnId, title } = req.body;
+
+    // add new column to the end of the columns array
+    project.board.columns.push({
+      taskIds: [],
+      id: columnId,
+      title
+    });
+
+    // add new column's reference to the end of the columnOrder array
+    project.board.columnOrder.push(columnId);
 
     await project.save();
 

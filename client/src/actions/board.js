@@ -266,7 +266,6 @@ export const deleteTask = (column, task) => async dispatch => {
       }
     });
 
-    debugger;
     const res = await axios.delete(
       `/api/project/${projectId}/deleteTask/${column.id}/${task.id}`
     );
@@ -284,9 +283,36 @@ export const deleteColumn = column => {
   };
 };
 
-export const createNewColumn = title => {
-  return {
-    type: CREATE_NEW_COLUMN,
-    payload: title
-  };
+export const createNewColumn = title => async dispatch => {
+  try {
+    const projectId = "5db53af211de1c625467b454";
+
+    const columnId = uuid.v4();
+
+    const body = { columnId, title };
+
+    const config = {
+      headers: {
+        "Content-Type": "application/json"
+      }
+    };
+
+    // update new uuid
+    await dispatch({
+      type: CREATE_NEW_COLUMN,
+      payload: {
+        title,
+        columnId
+      }
+    });
+
+    const res = await axios.put(
+      `/api/project/${projectId}/createColumn`,
+      body,
+      config
+    );
+    console.log(res);
+  } catch (err) {
+    console.log(err);
+  }
 };

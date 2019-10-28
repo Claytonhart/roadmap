@@ -217,20 +217,19 @@ export default function(state = initialState, action) {
       return newState;
     }
     case CREATE_NEW_COLUMN:
-      const title = payload;
-      const newColumnId = "new-column-id";
+      const { title, columnId } = payload;
 
       return {
         ...state,
         columns: {
           ...state.columns,
-          [newColumnId]: {
-            id: newColumnId,
+          [columnId]: {
+            id: columnId,
             title,
             taskIds: []
           }
         },
-        columnOrder: [...state.columnOrder, newColumnId]
+        columnOrder: [...state.columnOrder, columnId]
       };
     default:
       return state;
