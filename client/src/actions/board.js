@@ -220,7 +220,6 @@ export const updateExistingTask = (task, content) => async dispatch => {
 };
 
 export const createNewTask = (column, content) => async dispatch => {
-  debugger;
   try {
     const projectId = "5db53af211de1c625467b454";
 
@@ -253,24 +252,29 @@ export const createNewTask = (column, content) => async dispatch => {
   } catch (err) {
     console.log(err);
   }
-
-  // return {
-  //   type: CREATE_NEW_TASK,
-  //   payload: {
-  //     column,
-  //     content
-  //   }
-  // };
 };
 
-export const deleteTask = (column, task) => {
-  return {
-    type: DELETE_TASK,
-    payload: {
-      column,
-      task
-    }
-  };
+export const deleteTask = (column, task) => async dispatch => {
+  try {
+    const projectId = "5db53af211de1c625467b454";
+
+    await dispatch({
+      type: DELETE_TASK,
+      payload: {
+        column,
+        task
+      }
+    });
+
+    debugger;
+    const res = await axios.delete(
+      `/api/project/${projectId}/deleteTask/${column.id}/${task.id}`
+    );
+
+    console.log(res.data);
+  } catch (err) {
+    console.log(err);
+  }
 };
 
 export const deleteColumn = column => {

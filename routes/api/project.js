@@ -231,4 +231,41 @@ router.put("/:id/createNewTask", async (req, res) => {
   }
 });
 
+// @route   DELETE api/project/:id/deleteTask/:columnId/:taskId
+// @desc    project route
+// @access  Public
+router.delete("/:id/deleteTask/:columnId/:taskId", async (req, res) => {
+  try {
+    const project = await Project.findById(req.params.id);
+
+    const taskId = req.params.taskId;
+    const columnId = req.params.columnId;
+
+    // remove task with taskId
+    project.board.tasks.forEach((task, i) => {
+      if (task.id === taskId) {
+        project.board.tasks.splice(i, 1);
+      }
+    });
+
+    // remove taskId string from appropriate column
+    project.board.columns.forEach(column => {
+      if (column.id === columnId) {
+        column.taskIds.forEach((oldTaskId, i) => {
+          if (oldTaskId === taskId) {
+            column.taskIds.splice(i, 1);
+          }
+        });
+      }
+    });
+
+    await project.save();
+
+    res.json(project);
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send("Server Error");
+  }
+});
+
 module.exports = router;
