@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
 import styled from "styled-components/macro";
 import { DragDropContext, Droppable } from "react-beautiful-dnd";
@@ -12,6 +12,7 @@ import {
 
 import Column from "./column/Column";
 import NewColumn from "./newColumn/NewColumn";
+import BoardLoading from "./BoardLoading";
 
 const Container = styled.div`
   display: flex;
@@ -41,8 +42,10 @@ const Board = ({
   setTaskInNewColumn,
   getBoardById
 }) => {
+  const [isLoading, setIsLoading] = useState(true);
   useEffect(() => {
     getBoardById();
+    setIsLoading(false);
   }, [getBoardById]);
 
   const onDragEnd = async result => {
@@ -109,27 +112,35 @@ const Board = ({
 
   return (
     <DragDropContext onDragEnd={onDragEnd}>
-      <Droppable droppableId="all-columns" direction="horizontal" type="column">
-        {provided => (
-          <Container {...provided.droppableProps} ref={provided.innerRef}>
-            <InnerListContainer>
-              {boardState.columnOrder.map((columnId, index) => {
-                const column = boardState.columns[columnId];
-                return (
-                  <InnerList
-                    key={column.id}
-                    column={column}
-                    taskMap={boardState.tasks}
-                    index={index}
-                  />
-                );
-              })}
-              {provided.placeholder}
-            </InnerListContainer>
-            <NewColumn />
-          </Container>
-        )}
-      </Droppable>
+      {!isLoading & (boardState.columnOrder.length > 0) ? (
+        <Droppable
+          droppableId="all-columns"
+          direction="horizontal"
+          type="column"
+        >
+          {provided => (
+            <Container {...provided.droppableProps} ref={provided.innerRef}>
+              <InnerListContainer>
+                {boardState.columnOrder.map((columnId, index) => {
+                  const column = boardState.columns[columnId];
+                  return (
+                    <InnerList
+                      key={column.id}
+                      column={column}
+                      taskMap={boardState.tasks}
+                      index={index}
+                    />
+                  );
+                })}
+                {provided.placeholder}
+              </InnerListContainer>
+              <NewColumn />
+            </Container>
+          )}
+        </Droppable>
+      ) : (
+        <BoardLoading />
+      )}
     </DragDropContext>
   );
 };

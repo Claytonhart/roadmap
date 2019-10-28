@@ -3,6 +3,8 @@ import uuid from "uuid";
 
 import { setAlert } from "./alert";
 
+import sanatizeBoardState from "../utils/sanatizeBoardState";
+
 import {
   GET_BOARD,
   SET_COLUMN_ORDER,
@@ -14,7 +16,8 @@ import {
   DELETE_TASK,
   DELETE_COLUMN,
   CREATE_NEW_COLUMN,
-  GET_BOARD_BY_ID
+  GET_BOARD_BY_ID,
+  SET_PROJECT_DATA
 } from "./types";
 
 import initialData from "../initial-data";
@@ -32,20 +35,25 @@ export const getBoardById = () => async dispatch => {
 
     const res = await axios.get(`/api/project/${projectId}`);
     const { data } = res;
-    const { board, date, name, id } = data;
+    const { board, date, name, _id: id } = data;
 
-    console.log(res.data);
+    const newBoard = sanatizeBoardState(board);
 
     dispatch({
       type: GET_BOARD_BY_ID,
+      payload: newBoard
+    });
+
+    dispatch({
+      type: SET_PROJECT_DATA,
       payload: {
-        board,
-        date,
         name,
+        date,
         id
       }
     });
   } catch (err) {
+    console.log(err);
     const errors = err.response.data.errors;
     if (errors) {
       errors.forEach(error => dispatch(setAlert(error.msg, "danger")));

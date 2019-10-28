@@ -12,34 +12,38 @@ import {
   GET_BOARD_BY_ID
 } from "../actions/types";
 
-import sanatizeBoardState from "../utils/sanatizeBoardState";
+// const initialState = {
+//   tasks: {
+//     "task-1": { id: "task-1", content: "Take out the garbage" },
+//     "task-2": { id: "task-2", content: "Get ready for work" },
+//     "task-3": { id: "task-3", content: "Add another todo" },
+//     "task-4": { id: "task-4", content: "Wash the dog" }
+//   },
+//   columns: {
+//     "column-1": {
+//       id: "column-1",
+//       title: "To do",
+//       taskIds: ["task-1", "task-2", "task-3", "task-4"]
+//     },
+//     "column-2": {
+//       id: "column-2",
+//       title: "In progress",
+//       taskIds: []
+//     },
+//     "column-3": {
+//       id: "column-3",
+//       title: "done",
+//       taskIds: []
+//     }
+//   },
+//   // Facilitate reordering of the columns
+//   columnOrder: ["column-1", "column-2", "column-3"]
+// };
 
 const initialState = {
-  tasks: {
-    "task-1": { id: "task-1", content: "Take out the garbage" },
-    "task-2": { id: "task-2", content: "Get ready for work" },
-    "task-3": { id: "task-3", content: "Add another todo" },
-    "task-4": { id: "task-4", content: "Wash the dog" }
-  },
-  columns: {
-    "column-1": {
-      id: "column-1",
-      title: "To do",
-      taskIds: ["task-1", "task-2", "task-3", "task-4"]
-    },
-    "column-2": {
-      id: "column-2",
-      title: "In progress",
-      taskIds: []
-    },
-    "column-3": {
-      id: "column-3",
-      title: "done",
-      taskIds: []
-    }
-  },
-  // Facilitate reordering of the columns
-  columnOrder: ["column-1", "column-2", "column-3"]
+  tasks: {},
+  columns: {},
+  columnOrder: []
 };
 
 export default function(state = initialState, action) {
@@ -49,14 +53,9 @@ export default function(state = initialState, action) {
     case GET_BOARD:
       return payload;
     case GET_BOARD_BY_ID: {
-      // const { board, date, name, id } = payload;
-      const { board } = payload;
-      const newBoard = sanatizeBoardState(board);
-      // debugger;
-      console.log(newBoard);
+      const board = payload;
 
-      // return state;
-      return newBoard || state;
+      return board || state;
     }
     case SET_COLUMN_ORDER: {
       return {
