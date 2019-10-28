@@ -187,14 +187,43 @@ export const setColumnTitle = (title, column) => async dispatch => {
   }
 };
 
-export const updateExistingTask = (task, content) => {
-  return {
-    type: UPDATE_EXISTING_TASK,
-    payload: {
-      task,
-      content
-    }
-  };
+export const updateExistingTask = (task, content) => async dispatch => {
+  try {
+    const projectId = "5db53af211de1c625467b454";
+    const body = { task, content };
+
+    const config = {
+      headers: {
+        "Content-Type": "application/json"
+      }
+    };
+
+    await dispatch({
+      type: UPDATE_EXISTING_TASK,
+      payload: {
+        task,
+        content
+      }
+    });
+
+    const res = await axios.put(
+      `/api/project/${projectId}/setTaskTitle`,
+      body,
+      config
+    );
+
+    console.log(res.data);
+  } catch (err) {
+    console.log(err);
+  }
+
+  // return {
+  //   type: UPDATE_EXISTING_TASK,
+  //   payload: {
+  //     task,
+  //     content
+  //   }
+  // };
 };
 
 export const createNewTask = (column, content) => {

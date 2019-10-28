@@ -8,7 +8,6 @@ import ColumnTitle from "./ColumnTitle";
 import AddNewTaskButton from "./newTask/AddNewTaskButton";
 
 const InnerList = React.memo(props => {
-  // debugger;
   return props.tasks.map((task, index) => (
     <Task key={task.id} task={task} index={index} column={props.column} />
   ));

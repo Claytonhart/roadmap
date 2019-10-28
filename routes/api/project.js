@@ -164,4 +164,28 @@ router.put("/:id/setColumnTitle", async (req, res) => {
   res.json(project);
 });
 
+// @route   PUT api/project/:id/setColumnTitle
+// @desc    project route
+// @access  Public
+router.put("/:id/setTaskTitle", async (req, res) => {
+  const project = await Project.findById(req.params.id);
+
+  if (!project) {
+    return res.status(404).json({ msg: "Project not found" });
+  }
+
+  const { task, content } = req.body;
+  const { id } = task;
+
+  project.board.tasks.forEach(task => {
+    if (task.id === id) {
+      task.content = content;
+    }
+  });
+
+  await project.save();
+
+  res.json(project);
+});
+
 module.exports = router;

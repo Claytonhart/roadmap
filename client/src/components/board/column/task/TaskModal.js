@@ -27,18 +27,18 @@ const TaskModal = ({
   const [inputValue, setInputValue] = useState(title);
 
   useEffect(() => {
+    const keydownHandler = ({ key }) => {
+      switch (key) {
+        case "Escape":
+          onClose();
+          break;
+        default:
+      }
+    };
+
     document.addEventListener("keydown", keydownHandler);
     return () => document.removeEventListener("keydown", keydownHandler);
-  });
-
-  const keydownHandler = ({ key }) => {
-    switch (key) {
-      case "Escape":
-        onClose();
-        break;
-      default:
-    }
-  };
+  }, [onClose]);
 
   const onFormSubmit = e => {
     e.preventDefault();

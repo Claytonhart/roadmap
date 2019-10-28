@@ -24,12 +24,14 @@ const Task = ({ task, index, column }) => {
         >
           <Content>{task.content}</Content>
           <TaskEditButton task={task} column={column} />
-          <TaskModal
-            isVisible={modalShow}
-            title={task.content}
-            task={task}
-            onClose={() => setModalShow(false)}
-          />
+          {modalShow && (
+            <TaskModal
+              isVisible={modalShow}
+              title={task.content}
+              task={task}
+              onClose={() => setModalShow(false)}
+            />
+          )}
         </Container>
       )}
     </Draggable>
