@@ -304,4 +304,55 @@ router.put("/:id/createColumn", async (req, res) => {
   }
 });
 
+// @route   DELETE api/project/:id/createColumn
+// @desc    project route
+// @access  Public
+router.delete("/:id/deleteColumn/:columnId", async (req, res) => {
+  try {
+    const project = await Project.findById(req.params.id);
+
+    if (!project) {
+      return res.status(404).json({ msg: "Project not found" });
+    }
+
+    const { columnId } = req.params;
+
+    // const taskIdsToDelete = [...project.board.columns[columnId].taskIds];
+    let taskIdsToDelete = [];
+
+    project.board.columns.forEach(column => {
+      if (column.id === columnId) {
+        taskIdsToDelete = column.taskIds;
+      }
+    });
+
+    project.board.columns.forEach((column, i) => {
+      if (column.id === columnId) {
+        project.board.columns.splice(i, 1);
+      }
+    });
+
+    taskIdsToDelete.forEach(taskIdToDelete => {
+      project.board.tasks.forEach((task, i) => {
+        if (task.id === taskIdToDelete) {
+          project.board.tasks.splice(i, 1);
+        }
+      });
+    });
+
+    project.board.columnOrder.forEach((column, i) => {
+      if (column === columnId) {
+        project.board.columnOrder.splice(i, 1);
+      }
+    });
+
+    await project.save();
+
+    res.json(project);
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send("Server Error");
+  }
+});
+
 module.exports = router;

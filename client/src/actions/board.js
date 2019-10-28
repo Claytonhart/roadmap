@@ -276,11 +276,28 @@ export const deleteTask = (column, task) => async dispatch => {
   }
 };
 
-export const deleteColumn = column => {
-  return {
-    type: DELETE_COLUMN,
-    payload: column
-  };
+export const deleteColumn = column => async dispatch => {
+  try {
+    const projectId = "5db53af211de1c625467b454";
+
+    await dispatch({
+      type: DELETE_COLUMN,
+      payload: column
+    });
+
+    const res = await axios.delete(
+      `/api/project/${projectId}/deleteColumn/${column.id}`
+    );
+
+    console.log(res.data);
+  } catch (err) {
+    console.log(err);
+  }
+
+  // return {
+  //   type: DELETE_COLUMN,
+  //   payload: column
+  // };
 };
 
 export const createNewColumn = title => async dispatch => {
