@@ -84,7 +84,7 @@ const Board = ({
         ...start,
         taskIds: newTaskIds
       };
-      debugger;
+
       setTaskInSameColumn(newColumn);
       return;
     }
@@ -103,7 +103,7 @@ const Board = ({
       ...finish,
       taskIds: finishTaskIds
     };
-    debugger;
+
     setTaskInNewColumn(newStart, newFinish);
   };
 

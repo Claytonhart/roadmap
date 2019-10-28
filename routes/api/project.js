@@ -144,48 +144,91 @@ router.put("/:id/setTaskInNewColumn", async (req, res) => {
 // @desc    project route
 // @access  Public
 router.put("/:id/setColumnTitle", async (req, res) => {
-  const project = await Project.findById(req.params.id);
+  try {
+    const project = await Project.findById(req.params.id);
 
-  if (!project) {
-    return res.status(404).json({ msg: "Project not found" });
-  }
-
-  const { column, title } = req.body;
-  const { id } = column;
-
-  project.board.columns.forEach(column => {
-    if (column.id === id) {
-      column.title = title;
+    if (!project) {
+      return res.status(404).json({ msg: "Project not found" });
     }
-  });
 
-  await project.save();
+    const { column, title } = req.body;
+    const { id } = column;
 
-  res.json(project);
+    project.board.columns.forEach(column => {
+      if (column.id === id) {
+        column.title = title;
+      }
+    });
+
+    await project.save();
+
+    res.json(project);
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send("Server Error");
+  }
 });
 
-// @route   PUT api/project/:id/setColumnTitle
+// @route   PUT api/project/:id/setTaskTitle
 // @desc    project route
 // @access  Public
 router.put("/:id/setTaskTitle", async (req, res) => {
-  const project = await Project.findById(req.params.id);
+  try {
+    const project = await Project.findById(req.params.id);
 
-  if (!project) {
-    return res.status(404).json({ msg: "Project not found" });
-  }
-
-  const { task, content } = req.body;
-  const { id } = task;
-
-  project.board.tasks.forEach(task => {
-    if (task.id === id) {
-      task.content = content;
+    if (!project) {
+      return res.status(404).json({ msg: "Project not found" });
     }
-  });
 
-  await project.save();
+    const { task, content } = req.body;
+    const { id } = task;
 
-  res.json(project);
+    project.board.tasks.forEach(task => {
+      if (task.id === id) {
+        task.content = content;
+      }
+    });
+
+    await project.save();
+
+    res.json(project);
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send("Server Error");
+  }
+});
+
+// @route   PUT api/project/:id/createNewTask
+// @desc    project route
+// @access  Public
+router.put("/:id/createNewTask", async (req, res) => {
+  try {
+    const project = await Project.findById(req.params.id);
+
+    if (!project) {
+      return res.status(404).json({ msg: "Project not found" });
+    }
+
+    const { column, content, taskId } = req.body;
+    const columnId = column.id;
+
+    // add new task to end of tasks
+    project.board.tasks.push({ id: taskId, content });
+
+    // add task to taskList in appropriate column (in the first position)
+    project.board.columns.forEach(column => {
+      if (column.id === columnId) {
+        column.taskIds.unshift(taskId);
+      }
+    });
+
+    await project.save();
+
+    res.json(project);
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send("Server Error");
+  }
 });
 
 module.exports = router;

@@ -116,15 +116,17 @@ export default function(state = initialState, action) {
       };
     }
     case CREATE_NEW_TASK: {
-      const { column, content } = payload;
+      const { column, content, taskId } = payload;
       const { id } = column;
 
+      // add new task to list of tasks
+      // and the appropriate column's taskId array (at the front)
       return {
         ...state,
         tasks: {
           ...state.tasks,
-          "new-id": {
-            id: "new-id",
+          [taskId]: {
+            id: taskId,
             content
           }
         },
@@ -132,7 +134,7 @@ export default function(state = initialState, action) {
           ...state.columns,
           [id]: {
             ...state.columns[id],
-            taskIds: ["new-id", ...state.columns[id].taskIds]
+            taskIds: [taskId, ...state.columns[id].taskIds]
           }
         }
       };

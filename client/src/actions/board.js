@@ -1,4 +1,5 @@
 import axios from "axios";
+import uuid from "uuid";
 
 import { setAlert } from "./alert";
 
@@ -216,24 +217,50 @@ export const updateExistingTask = (task, content) => async dispatch => {
   } catch (err) {
     console.log(err);
   }
+};
+
+export const createNewTask = (column, content) => async dispatch => {
+  debugger;
+  try {
+    const projectId = "5db53af211de1c625467b454";
+
+    const taskId = uuid.v4();
+
+    const body = { column, content, taskId };
+
+    const config = {
+      headers: {
+        "Content-Type": "application/json"
+      }
+    };
+
+    await dispatch({
+      type: CREATE_NEW_TASK,
+      payload: {
+        column,
+        content,
+        taskId
+      }
+    });
+
+    const res = await axios.put(
+      `/api/project/${projectId}/createNewTask`,
+      body,
+      config
+    );
+
+    console.log(res.data);
+  } catch (err) {
+    console.log(err);
+  }
 
   // return {
-  //   type: UPDATE_EXISTING_TASK,
+  //   type: CREATE_NEW_TASK,
   //   payload: {
-  //     task,
+  //     column,
   //     content
   //   }
   // };
-};
-
-export const createNewTask = (column, content) => {
-  return {
-    type: CREATE_NEW_TASK,
-    payload: {
-      column,
-      content
-    }
-  };
 };
 
 export const deleteTask = (column, task) => {
