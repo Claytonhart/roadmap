@@ -1,5 +1,7 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import styled from "styled-components/macro";
+
 import WorkspaceItem from "./workspaceItem/WorkspaceItem";
 
 const Container = styled.div`
@@ -15,17 +17,23 @@ const Container = styled.div`
 `;
 
 const NavContainer = styled.div`
+  margin-top: 10px;
   margin-bottom: 10px;
 `;
 
-const NavTitle = styled.div`
-  /* text-align: center; */
+const NavTitle = styled.h3`
+  display: block;
+  color: inherit;
   text-decoration: underline;
   text-decoration-color: ${props => props.theme.primary.red};
   font-size: 24px;
   font-weight: 700;
-  /* border-bottom: 2px solid ${props => props.theme.primary.red}; */
   margin-bottom: 50px;
+
+  &:hover {
+    color: inherit;
+    text-decoration-color: ${props => props.theme.primary.red};
+  }
 `;
 
 const NavLinks = styled.div`
@@ -66,7 +74,9 @@ const Sidebar = () => {
   return (
     <Container>
       <NavContainer>
-        <NavTitle>Roadmap</NavTitle>
+        <NavTitle as={Link} to="/">
+          Roadmap
+        </NavTitle>
         <NavLinks>Links</NavLinks>
       </NavContainer>
       <NavContentHeader>Your Workspaces</NavContentHeader>
