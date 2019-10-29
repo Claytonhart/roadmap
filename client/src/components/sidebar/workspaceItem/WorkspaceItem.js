@@ -1,7 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
+import { withRouter } from "react-router-dom";
 
-import { getBoardById } from "../../../actions/board";
 import { createNewProject } from "../../../actions/project";
 import ProjectItem from "./projectItem/ProjectItem";
 
@@ -20,11 +20,11 @@ const WorkspaceItem = ({
   people,
   projects,
   createNewProject,
-  getBoardById
+  history
 }) => {
   const createProject = async () => {
     const id = await createNewProject("New Test Board");
-    getBoardById(id);
+    history.push(`/project/${id}`);
   };
 
   return (
@@ -55,7 +55,9 @@ const WorkspaceItem = ({
   );
 };
 
-export default connect(
-  null,
-  { createNewProject, getBoardById }
-)(WorkspaceItem);
+export default withRouter(
+  connect(
+    null,
+    { createNewProject }
+  )(WorkspaceItem)
+);

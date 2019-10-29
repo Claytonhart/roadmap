@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
+import { useParams } from "react-router-dom";
 
 import { updateExistingTask } from "../../../../actions/board";
 
@@ -24,6 +25,7 @@ const TaskModal = ({
   task,
   updateExistingTask
 }) => {
+  let { projectId } = useParams();
   const [inputValue, setInputValue] = useState(title);
 
   useEffect(() => {
@@ -42,7 +44,7 @@ const TaskModal = ({
 
   const onFormSubmit = e => {
     e.preventDefault();
-    updateExistingTask(task, inputValue);
+    updateExistingTask(projectId, task, inputValue);
   };
 
   return !isVisible ? null : (

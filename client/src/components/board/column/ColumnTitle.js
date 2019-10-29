@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { connect } from "react-redux";
+import { useParams } from "react-router-dom";
 import { deleteColumn } from "../../../actions/board";
 
 import ColumnTitleInput from "./ColumnTitleInput";
@@ -11,6 +12,8 @@ import {
 } from "./styles";
 
 const ColumnTitle = ({ column, provided, deleteColumn }) => {
+  let { projectId } = useParams();
+
   const { title } = column;
 
   const [isSelected, setIsSelected] = useState(false);
@@ -18,7 +21,7 @@ const ColumnTitle = ({ column, provided, deleteColumn }) => {
   const showDropdown = e => {
     e.stopPropagation();
     console.log("clicked delete column");
-    deleteColumn(column);
+    deleteColumn(projectId, column);
   };
 
   const titleToRender = !isSelected ? (

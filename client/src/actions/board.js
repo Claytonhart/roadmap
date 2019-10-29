@@ -29,17 +29,10 @@ export const getBoard = () => {
   };
 };
 
-export const getBoardById = (
-  projectId = "5db53af211de1c625467b454"
-) => async dispatch => {
+export const getBoardById = projectId => async dispatch => {
   try {
-    // const pathname = window.location.pathname;
-    // const pathnameArray = pathname.split("/");
-    // const testId = pathnameArray[2];
-    // debugger;
-    // const projectId = "5db53af211de1c625467b454";
-    // const projectId = "5db6c885ca1927252c249156";
-
+    console.log(projectId);
+    console.log(typeof projectId);
     const res = await axios.get(`/api/project/${projectId}`);
     const { data } = res;
     const { board, date, name, _id: id } = data;
@@ -59,6 +52,7 @@ export const getBoardById = (
         id
       }
     });
+    return id;
   } catch (err) {
     console.log(err);
     const errors = err.response.data.errors;
@@ -67,17 +61,12 @@ export const getBoardById = (
     }
 
     console.log(err);
+    return null;
   }
 };
 
-export const setColumnOrder = order => async dispatch => {
+export const setColumnOrder = (projectId, order) => async dispatch => {
   try {
-    const projectId = "5db53af211de1c625467b454";
-
-    // const pathname = window.location.pathname;
-    // const pathnameArray = pathname.split("/");
-    // const testId = pathnameArray[2];
-
     const body = { columnOrder: order };
 
     const config = {
@@ -113,9 +102,9 @@ export const setColumnOrder = order => async dispatch => {
   }
 };
 
-export const setTaskInSameColumn = taskOrder => async dispatch => {
+export const setTaskInSameColumn = (projectId, taskOrder) => async dispatch => {
   try {
-    const projectId = "5db53af211de1c625467b454";
+    // const projectId = "5db53af211de1c625467b454";
 
     const body = { column: taskOrder };
 
@@ -143,11 +132,12 @@ export const setTaskInSameColumn = taskOrder => async dispatch => {
 };
 
 export const setTaskInNewColumn = (
+  projectId,
   startColumn,
   finishColumn
 ) => async dispatch => {
   try {
-    const projectId = "5db53af211de1c625467b454";
+    // const projectId = "5db53af211de1c625467b454";
 
     const body = { startColumn, finishColumn };
 
@@ -177,9 +167,9 @@ export const setTaskInNewColumn = (
   }
 };
 
-export const setColumnTitle = (title, column) => async dispatch => {
+export const setColumnTitle = (projectId, title, column) => async dispatch => {
   try {
-    const projectId = "5db53af211de1c625467b454";
+    // const projectId = "5db53af211de1c625467b454";
     const body = { title, column };
 
     const config = {
@@ -207,9 +197,13 @@ export const setColumnTitle = (title, column) => async dispatch => {
   }
 };
 
-export const updateExistingTask = (task, content) => async dispatch => {
+export const updateExistingTask = (
+  projectId,
+  task,
+  content
+) => async dispatch => {
   try {
-    const projectId = "5db53af211de1c625467b454";
+    // const projectId = "5db53af211de1c625467b454";
     const body = { task, content };
 
     const config = {
@@ -238,9 +232,9 @@ export const updateExistingTask = (task, content) => async dispatch => {
   }
 };
 
-export const createNewTask = (column, content) => async dispatch => {
+export const createNewTask = (projectId, column, content) => async dispatch => {
   try {
-    const projectId = "5db53af211de1c625467b454";
+    // const projectId = "5db53af211de1c625467b454";
 
     const taskId = uuid.v4();
 
@@ -273,9 +267,9 @@ export const createNewTask = (column, content) => async dispatch => {
   }
 };
 
-export const deleteTask = (column, task) => async dispatch => {
+export const deleteTask = (projectId, column, task) => async dispatch => {
   try {
-    const projectId = "5db53af211de1c625467b454";
+    // const projectId = "5db53af211de1c625467b454";
 
     await dispatch({
       type: DELETE_TASK,
@@ -295,9 +289,9 @@ export const deleteTask = (column, task) => async dispatch => {
   }
 };
 
-export const deleteColumn = column => async dispatch => {
+export const deleteColumn = (projectId, column) => async dispatch => {
   try {
-    const projectId = "5db53af211de1c625467b454";
+    // const projectId = "5db53af211de1c625467b454";
 
     await dispatch({
       type: DELETE_COLUMN,
@@ -319,9 +313,9 @@ export const deleteColumn = column => async dispatch => {
   // };
 };
 
-export const createNewColumn = title => async dispatch => {
+export const createNewColumn = (projectId, title) => async dispatch => {
   try {
-    const projectId = "5db53af211de1c625467b454";
+    // const projectId = "5db53af211de1c625467b454";
 
     const columnId = uuid.v4();
 

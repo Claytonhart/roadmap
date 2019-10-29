@@ -1,5 +1,6 @@
 const express = require("express");
 const router = express.Router();
+const ObjectId = require("mongoose").Types.ObjectId;
 
 const Project = require("../../models/Project");
 
@@ -36,7 +37,17 @@ router.post("/", async (req, res) => {
 // @access  Public
 router.get("/:id", async (req, res) => {
   try {
-    const project = await Project.findById(req.params.id);
+    let project;
+    // Check if the id is a 12 char string
+    if (ObjectId.isValid(req.params.id)) {
+      const newObjectId = new ObjectId(req.params.id).toString();
+      if (newObjectId === req.params.id) {
+        project = await Project.findById(req.params.id);
+      }
+    } else {
+      return res.status(404).json({ msg: "Invalid object id" });
+    }
+    // const project = await Project.findById(req.params.id);
 
     if (!project) {
       return res.status(404).json({ msg: "Project not found" });
@@ -44,6 +55,7 @@ router.get("/:id", async (req, res) => {
 
     res.json(project);
   } catch (err) {
+    console.error(err.message);
     res.status(500).send("Server Error");
   }
 });

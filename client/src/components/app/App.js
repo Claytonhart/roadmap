@@ -5,9 +5,11 @@ import styled from "styled-components/macro";
 import { Provider } from "react-redux";
 import store from "../../store";
 
-import Sidebar from "../sidebar/Sidebar";
-import TopBar from "../topbar/TopBar";
-import Board from "../board/Board";
+// react-router
+import { BrowserRouter, Route, Switch } from "react-router-dom";
+
+import Landing from "../landing/Landing";
+import Project from "../project/Project";
 
 const AppContainer = styled.div`
   display: flex;
@@ -15,24 +17,17 @@ const AppContainer = styled.div`
   width: 100vw;
 `;
 
-const MainContainer = styled.div`
-  display: flex;
-  flex: 1;
-  flex-direction: column;
-
-  overflow: hidden;
-`;
-
 const App = () => {
   return (
     <Provider store={store}>
-      <AppContainer>
-        <Sidebar />
-        <MainContainer>
-          <TopBar />
-          <Board />
-        </MainContainer>
-      </AppContainer>
+      <BrowserRouter>
+        <AppContainer>
+          <Switch>
+            <Route exact path="/" component={Landing} />
+            <Route path="/project" component={Project} />
+          </Switch>
+        </AppContainer>
+      </BrowserRouter>
     </Provider>
   );
 };

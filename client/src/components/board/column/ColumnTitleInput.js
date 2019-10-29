@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
+import { useParams } from "react-router-dom";
 import { setColumnTitle } from "../../../actions/board";
 
 import onEscOrClickOutside from "../../../utils/onEscOrClickOutside";
@@ -7,7 +8,9 @@ import onEscOrClickOutside from "../../../utils/onEscOrClickOutside";
 import { TitleForm, TitleInput } from "./styles";
 
 const ColumnTitleInput = ({ column, setIsSelected, setColumnTitle }) => {
+  let { projectId } = useParams();
   const { title } = column;
+
   const [inputValue, setInputValue] = useState(title);
 
   useEffect(() => {
@@ -21,7 +24,7 @@ const ColumnTitleInput = ({ column, setIsSelected, setColumnTitle }) => {
 
   const onFormSubmit = e => {
     e.preventDefault();
-    setColumnTitle(inputValue, column);
+    setColumnTitle(projectId, inputValue, column);
     setIsSelected(false);
   };
 

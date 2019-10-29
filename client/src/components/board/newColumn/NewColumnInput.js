@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
+import { useParams } from "react-router-dom";
 
 import { createNewColumn } from "../../../actions/board";
 import { NewColumnForm, NewColumnFormInput } from "./styles";
@@ -7,6 +8,7 @@ import { NewColumnForm, NewColumnFormInput } from "./styles";
 import onEscOrClickOutside from "../../../utils/onEscOrClickOutside";
 
 const NewColumnInput = ({ setIsSelected, createNewColumn }) => {
+  let { projectId } = useParams();
   const [inputValue, setInputValue] = useState("");
 
   useEffect(() => {
@@ -20,7 +22,7 @@ const NewColumnInput = ({ setIsSelected, createNewColumn }) => {
 
   const onNewColumnSubmit = e => {
     e.preventDefault();
-    createNewColumn(inputValue);
+    createNewColumn(projectId, inputValue);
     setIsSelected(false);
   };
 

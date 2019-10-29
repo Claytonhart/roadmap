@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
+import { useParams } from "react-router-dom";
 import { createNewTask } from "../../../../actions/board";
 
 import { NewTask, NewTaskForm } from "./styles";
@@ -7,6 +8,7 @@ import { NewTask, NewTaskForm } from "./styles";
 import onEscOrClickOutside from "../../../../utils/onEscOrClickOutside";
 
 const NewTaskContainer = ({ column, setIsActive, createNewTask }) => {
+  let { projectId } = useParams();
   const [inputValue, setInputValue] = useState("");
 
   useEffect(() => {
@@ -21,7 +23,7 @@ const NewTaskContainer = ({ column, setIsActive, createNewTask }) => {
   const onFormSubmit = e => {
     e.preventDefault();
     // create new task
-    createNewTask(column, inputValue);
+    createNewTask(projectId, column, inputValue);
     setIsActive(false);
   };
 

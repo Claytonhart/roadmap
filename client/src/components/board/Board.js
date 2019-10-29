@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
+import { useParams, withRouter } from "react-router-dom";
 import styled from "styled-components/macro";
 import { DragDropContext, Droppable } from "react-beautiful-dnd";
 
@@ -41,13 +42,24 @@ const Board = ({
   setTaskInSameColumn,
   setTaskInNewColumn,
   getBoardById,
-  projectId
+  history
 }) => {
+  let { projectId } = useParams();
+
   const [isLoading, setIsLoading] = useState(true);
   useEffect(() => {
-    getBoardById();
+    async function fetchBoard() {
+      let tempId = await getBoardById(projectId);
+
+      if (!tempId) {
+        history.push("/project");
+      }
+    }
+    fetchBoard();
+
+    // debugger;
     setIsLoading(false);
-  }, [getBoardById]);
+  }, [getBoardById, projectId, history]);
 
   const onDragEnd = async result => {
     const { destination, source, draggableId, type } = result;
@@ -71,7 +83,7 @@ const Board = ({
       newColumnOrder.splice(source.index, 1);
       newColumnOrder.splice(destination.index, 0, draggableId);
 
-      await setColumnOrder(newColumnOrder);
+      await setColumnOrder(projectId, newColumnOrder);
       return;
     }
 
@@ -89,7 +101,7 @@ const Board = ({
         taskIds: newTaskIds
       };
 
-      setTaskInSameColumn(newColumn);
+      setTaskInSameColumn(projectId, newColumn);
       return;
     }
 
@@ -108,7 +120,7 @@ const Board = ({
       taskIds: finishTaskIds
     };
 
-    setTaskInNewColumn(newStart, newFinish);
+    setTaskInNewColumn(projectId, newStart, newFinish);
   };
 
   return (
@@ -147,16 +159,17 @@ const Board = ({
 };
 
 const mapStateToProps = state => ({
-  boardState: state.board,
-  projectId: state.project.id
+  boardState: state.board
 });
 
-export default connect(
-  mapStateToProps,
-  {
-    setColumnOrder,
-    setTaskInSameColumn,
-    setTaskInNewColumn,
-    getBoardById
-  }
-)(Board);
+export default withRouter(
+  connect(
+    mapStateToProps,
+    {
+      setColumnOrder,
+      setTaskInSameColumn,
+      setTaskInNewColumn,
+      getBoardById
+    }
+  )(Board)
+);
