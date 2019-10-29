@@ -25,21 +25,26 @@ const ProjectTitle = styled.h3`
   }
 `;
 
-const TopBar = ({ project }) => {
+const TopBar = ({ project, user }) => {
   const { name } = project;
-  // const newDate = new Date(date);
-  // newDate.toDateString();
+  let userName;
+
+  if (user) {
+    userName = user.name;
+  }
+
   return (
     <TopBarContainer>
       <ProjectTitle>{name}</ProjectTitle>
       <div></div>
-      <div>Profile</div>
+      <div>{userName}</div>
     </TopBarContainer>
   );
 };
 
 const mapStateToProps = state => ({
-  project: state.project
+  project: state.project,
+  user: state.auth.user
 });
 
 export default connect(mapStateToProps)(TopBar);
