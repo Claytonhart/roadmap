@@ -7,7 +7,9 @@ const Project = require("../../models/Project");
 // @route   GET api/project
 // @desc    project route
 // @access  Public
-router.get("/", (req, res) => res.send("project route"));
+router.get("/", async (req, res) => {
+  // get current user's projects
+});
 
 // @route   POST api/project
 // @desc    project route

@@ -46,7 +46,7 @@ router.post(
       if (!user) {
         return res
           .status(400)
-          .json({ errors: [{ msg: "Invalid Credentials" }] });
+          .json({ errors: [{ msg: "Email or password is incorrect" }] });
       }
 
       // password is plaintext entered by user, user.password is the encrypted pw from db
@@ -56,7 +56,7 @@ router.post(
       if (!isMatch) {
         return res
           .status(400)
-          .json({ errors: [{ msg: "Invalid Credentials" }] });
+          .json({ errors: [{ msg: "Email or password is incorrect" }] });
       }
 
       // Return jsonwebtoken

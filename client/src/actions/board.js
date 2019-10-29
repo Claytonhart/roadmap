@@ -1,8 +1,6 @@
 import axios from "axios";
 import uuid from "uuid";
 
-import { setAlert } from "./alert";
-
 import sanatizeBoardState from "../utils/sanatizeBoardState";
 
 import {
@@ -54,12 +52,6 @@ export const getBoardById = projectId => async dispatch => {
     });
     return id;
   } catch (err) {
-    console.log(err);
-    const errors = err.response.data.errors;
-    if (errors) {
-      errors.forEach(error => dispatch(setAlert(error.msg, "danger")));
-    }
-
     console.log(err);
     return null;
   }
