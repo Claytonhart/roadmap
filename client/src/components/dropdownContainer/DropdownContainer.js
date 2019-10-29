@@ -1,8 +1,9 @@
-import React from "react";
+import React, { useEffect } from "react";
 import styled from "styled-components/macro";
+import onEscOrClickOutside from "../../utils/onEscOrClickOutside";
 
 const Container = styled.div`
-  display: ${props => (props.display ? "block" : "none")};
+  display: ${props => (props.show ? "block" : "none")};
   top: ${props => (props.top ? props.top : null)};
   bottom: ${props => (props.bottom ? props.bottom : null)};
   left: ${props => (props.left ? props.left : null)};
@@ -23,8 +24,22 @@ const Container = styled.div`
 `;
 
 const DropdownContainer = props => {
-  const { children, ...position } = props;
-  return <Container {...position}>{children}</Container>;
+  const { children, callback, ...position } = props;
+
+  useEffect(() => {
+    const element = document.getElementById("dropdown-container");
+    const cleanup = onEscOrClickOutside(callback, element);
+
+    return () => {
+      cleanup();
+    };
+  });
+
+  return (
+    <Container id="dropdown-container" {...position}>
+      {children}
+    </Container>
+  );
 };
 
 export default DropdownContainer;

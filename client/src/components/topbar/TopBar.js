@@ -1,7 +1,8 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components/macro";
 
 import { connect } from "react-redux";
+import { Link } from "react-router-dom";
 
 import DropdownContainer from "../dropdownContainer/DropdownContainer";
 import { logout } from "../../actions/auth";
@@ -31,29 +32,40 @@ const ProjectTitle = styled.h3`
 const Profile = styled.div``;
 
 const ProfileName = styled.button`
+  color: ${props => props.theme.primary.grey};
+  font-size: 16px;
   cursor: pointer;
   padding: 8px;
   background-color: transparent;
   border: none;
   outline: none;
 
-  &:focus + div {
-    display: block;
-  }
-`;
-
-const ProfileItem = styled.div`
-  cursor: pointer;
-  padding: 10px;
-  background-color: #fff;
-  text-align: right;
-
-  &:hover {
+  &:focus {
     background-color: #f6f8f9;
   }
 `;
 
+const ProfileItem = styled.button`
+  cursor: pointer;
+  padding: 8px 16px;
+  background-color: #fff;
+  text-align: right;
+  display: block;
+  border: none;
+  background-color: transparent;
+  width: 100%;
+  color: inherit;
+
+  &:hover {
+    background-color: #f6f8f9;
+    text-decoration: none;
+    color: inherit;
+  }
+`;
+
 const TopBar = ({ project, user, logout }) => {
+  const [showDropdown, setShowDropdown] = useState(false);
+
   const { name } = project;
   let userName;
 
@@ -66,11 +78,22 @@ const TopBar = ({ project, user, logout }) => {
       <ProjectTitle>{name}</ProjectTitle>
       <div></div>
       <Profile>
-        <ProfileName>{userName}</ProfileName>
-        <DropdownContainer top={"80px"} right={"10px"}>
-          <ProfileItem>All Projects</ProfileItem>
-          <ProfileItem onClick={logout}>Log out</ProfileItem>
-        </DropdownContainer>
+        <ProfileName onClick={() => setShowDropdown(true)}>
+          {userName}
+        </ProfileName>
+        {showDropdown && (
+          <DropdownContainer
+            callback={setShowDropdown}
+            show={showDropdown}
+            top={"80px"}
+            right={"10px"}
+          >
+            <ProfileItem as={Link} to="/project">
+              All Projects
+            </ProfileItem>
+            <ProfileItem onClick={logout}>Log out</ProfileItem>
+          </DropdownContainer>
+        )}
       </Profile>
     </TopBarContainer>
   );
