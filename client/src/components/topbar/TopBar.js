@@ -3,6 +3,9 @@ import styled from "styled-components/macro";
 
 import { connect } from "react-redux";
 
+import DropdownContainer from "../dropdownContainer/DropdownContainer";
+import { logout } from "../../actions/auth";
+
 const TopBarContainer = styled.div`
   height: 100px;
   padding: 0 20px;
@@ -25,7 +28,32 @@ const ProjectTitle = styled.h3`
   }
 `;
 
-const TopBar = ({ project, user }) => {
+const Profile = styled.div``;
+
+const ProfileName = styled.button`
+  cursor: pointer;
+  padding: 8px;
+  background-color: transparent;
+  border: none;
+  outline: none;
+
+  &:focus + div {
+    display: block;
+  }
+`;
+
+const ProfileItem = styled.div`
+  cursor: pointer;
+  padding: 10px;
+  background-color: #fff;
+  text-align: right;
+
+  &:hover {
+    background-color: #f6f8f9;
+  }
+`;
+
+const TopBar = ({ project, user, logout }) => {
   const { name } = project;
   let userName;
 
@@ -37,7 +65,13 @@ const TopBar = ({ project, user }) => {
     <TopBarContainer>
       <ProjectTitle>{name}</ProjectTitle>
       <div></div>
-      <div>{userName}</div>
+      <Profile>
+        <ProfileName>{userName}</ProfileName>
+        <DropdownContainer top={"80px"} right={"10px"}>
+          <ProfileItem>All Projects</ProfileItem>
+          <ProfileItem onClick={logout}>Log out</ProfileItem>
+        </DropdownContainer>
+      </Profile>
     </TopBarContainer>
   );
 };
@@ -47,4 +81,7 @@ const mapStateToProps = state => ({
   user: state.auth.user
 });
 
-export default connect(mapStateToProps)(TopBar);
+export default connect(
+  mapStateToProps,
+  { logout }
+)(TopBar);
