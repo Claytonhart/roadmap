@@ -11,10 +11,6 @@ export const Container = styled.div`
 
   display: flex;
   justify-content: space-between;
-
-  &:hover > span {
-    opacity: 1;
-  }
 `;
 
 export const Content = styled.div`

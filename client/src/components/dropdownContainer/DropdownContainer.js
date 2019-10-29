@@ -12,7 +12,6 @@ const Container = styled.div`
     props.backgroundColor ? props.backgroundColor : "#fff"};
 
   position: absolute;
-  z-index: 99999;
   border: 1px solid gainsboro;
   box-shadow: 0 2px 4px 0 gainsboro;
   padding: 5px 0;
