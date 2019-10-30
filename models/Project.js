@@ -44,6 +44,12 @@ const ProjectSchema = new Schema({
     type: String,
     required: true
   },
+  user: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: "user"
+    }
+  ],
   board: BoardSchema,
   date: {
     type: Date,

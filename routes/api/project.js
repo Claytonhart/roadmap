@@ -1,16 +1,20 @@
 const express = require("express");
 const router = express.Router();
 const ObjectId = require("mongoose").Types.ObjectId;
+const auth = require("../../middleware/auth");
 
 const Project = require("../../models/Project");
 
 // @route   GET api/project
-// @desc    project route
-// @access  Public
-router.get("/", async (req, res) => {
-  // get current user's projects
+// @desc    get a user's projects
+// @access  Private
+router.get("/", auth, async (req, res) => {
+  // get all of current user's projects by most recently created
+  const userId = new ObjectId(req.user.id);
   try {
-    const projects = await Project.find().sort({ date: -1 });
+    const projects = await Project.find({ user: userId }).sort({
+      date: -1
+    });
     res.json(projects);
   } catch (err) {
     console.error(err.message);
@@ -19,16 +23,17 @@ router.get("/", async (req, res) => {
 });
 
 // @route   POST api/project
-// @desc    project route
-// @access  Public
-router.post("/", async (req, res) => {
+// @desc    create a new project
+// @access  Private
+router.post("/", auth, async (req, res) => {
   // console.log(req.body);
-
+  const userId = new ObjectId(req.user.id);
   const { name, board } = req.body;
 
   try {
     let project = new Project({
       name,
+      user: userId,
       board
     });
 
