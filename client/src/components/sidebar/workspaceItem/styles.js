@@ -11,16 +11,18 @@ export const WorkspaceItemTitleContainer = styled.div`
   display: flex;
   justify-content: space-between;
   margin-top: 8px;
-
-  &:hover > span {
-    opacity: 1;
-  }
 `;
 
 export const WorkspaceItemTitle = styled.h6`
   font-size: 14px;
   color: #fff;
   cursor: pointer;
+`;
+
+export const WorkspaceItemIconContainer = styled.div`
+  &:hover > span {
+    opacity: 1;
+  }
 `;
 
 export const WorkspaceItemIcon = styled.span`
