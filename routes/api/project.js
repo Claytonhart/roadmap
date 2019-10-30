@@ -4,17 +4,20 @@ const ObjectId = require("mongoose").Types.ObjectId;
 const auth = require("../../middleware/auth");
 
 const Project = require("../../models/Project");
+const User = require("../../models/User");
 
 // @route   GET api/project
-// @desc    get a user's projects
+// @desc    get a user's projects (no board state)
 // @access  Private
 router.get("/", auth, async (req, res) => {
   // get all of current user's projects by most recently created
   const userId = new ObjectId(req.user.id);
   try {
-    const projects = await Project.find({ user: userId }).sort({
-      date: -1
-    });
+    const projects = await Project.find({ users: userId })
+      .select("-board")
+      .sort({
+        date: -1
+      });
     res.json(projects);
   } catch (err) {
     console.error(err.message);
@@ -33,7 +36,7 @@ router.post("/", auth, async (req, res) => {
   try {
     let project = new Project({
       name,
-      user: userId,
+      users: [userId],
       board
     });
 
@@ -375,6 +378,44 @@ router.delete("/:id/deleteColumn/:columnId", async (req, res) => {
     await project.save();
 
     res.json(project);
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send("Server Error");
+  }
+});
+
+// @route   GET api/project/:id/users
+// @desc    get other use by id
+// @access  Private
+router.get("/:id/users", auth, async (req, res) => {
+  try {
+    let project;
+    // Check if the id is a 12 char string
+    if (ObjectId.isValid(req.params.id)) {
+      const newObjectId = new ObjectId(req.params.id).toString();
+      if (newObjectId === req.params.id) {
+        project = await Project.findById(req.params.id);
+      }
+    } else {
+      return res.status(404).json({ msg: "Invalid object id" });
+    }
+    // const project = await Project.findById(req.params.id);
+
+    if (!project) {
+      return res.status(404).json({ msg: "Project not found" });
+    }
+
+    const usersPromiseArray = project.users.map(async user => {
+      const userName = await User.findById(new ObjectId(user)).select(
+        "-password"
+      );
+      // returns null if no user
+      return userName;
+    });
+
+    const userData = await Promise.all(usersPromiseArray);
+
+    res.json(userData);
   } catch (err) {
     console.error(err.message);
     res.status(500).send("Server Error");

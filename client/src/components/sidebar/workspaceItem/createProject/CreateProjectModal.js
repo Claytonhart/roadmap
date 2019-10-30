@@ -61,8 +61,8 @@ const CreateProjectModal = ({
       setAlert("Please add a project title", "red");
     } else {
       const id = await createNewProject(projectTitle);
-      history.push(`/project/${id}`);
       onClose();
+      history.push(`/project/${id}`);
     }
   };
 

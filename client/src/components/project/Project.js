@@ -6,7 +6,7 @@ import { Route, Switch, useRouteMatch } from "react-router-dom";
 import Board from "../board/Board";
 import TopBar from "../topbar/TopBar";
 import Sidebar from "../sidebar/Sidebar";
-import ProjectCreate from "./ProjectCreate";
+import ProjectList from "./projectList/ProjectList";
 
 const MainContainer = styled.div`
   display: flex;
@@ -25,7 +25,7 @@ const Project = () => {
       <MainContainer>
         <TopBar />
         <Switch>
-          <Route exact path={path} component={ProjectCreate} />
+          <Route exact path={path} component={ProjectList} />
           <Route path={`${path}/:projectId`} component={Board} />
         </Switch>
       </MainContainer>

@@ -19,22 +19,13 @@ import {
 } from "./styles";
 import CreateProjectModal from "./createProject/CreateProjectModal";
 
-const WorkspaceItem = ({
-  title,
-  people,
-  projects,
-  createNewProject,
-  history
-}) => {
+const WorkspaceItem = ({ title, people, projects }) => {
   const [showDropdown, setShowDropdown] = useState(false);
   const [showCreateProjectModal, setShowCreateProjectModal] = useState(false);
 
   const createProject = async () => {
-    console.log("creating project");
     setShowDropdown(false);
     setShowCreateProjectModal(true);
-    // const id = await createNewProject("New Test Board");
-    // history.push(`/project/${id}`);
   };
 
   return (
