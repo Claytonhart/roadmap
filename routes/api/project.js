@@ -9,6 +9,13 @@ const Project = require("../../models/Project");
 // @access  Public
 router.get("/", async (req, res) => {
   // get current user's projects
+  try {
+    const projects = await Project.find().sort({ date: -1 });
+    res.json(projects);
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send("Server Error");
+  }
 });
 
 // @route   POST api/project
