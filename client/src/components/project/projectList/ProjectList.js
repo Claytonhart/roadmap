@@ -32,7 +32,7 @@ const ProjectListName = styled.h4`
 const ProjectListUsers = styled.p`
   font-size: 14px;
   margin: 0;
-  margin-right: 10px;
+  margin-right: 20px;
 `;
 
 const ProjectCreateButton = styled.button`

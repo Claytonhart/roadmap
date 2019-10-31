@@ -56,7 +56,7 @@ const ProjectListTitle = styled.h3`
 const ProjectListNames = styled.ul`
   display: flex;
   margin: 0;
-  margin-right: 10px;
+  margin-right: 20px;
 `;
 
 const ProjectListName = styled.li`
