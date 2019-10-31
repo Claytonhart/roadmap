@@ -1,7 +1,7 @@
 import axios from "axios";
 import uuid from "uuid";
 
-import { CREATE_NEW_PROJECT, CLEAR_PROJECT } from "./types";
+import { CREATE_NEW_PROJECT, CLEAR_PROJECT, SET_PROJECT_NAME } from "./types";
 
 export const createNewProject = name => async dispatch => {
   try {
@@ -60,4 +60,19 @@ export const clearProject = () => {
   return {
     type: CLEAR_PROJECT
   };
+};
+
+export const setProjectName = (id, name) => async dispatch => {
+  try {
+    const body = { name };
+
+    await axios.put(`/api/project/${id}/setProjectName`, body);
+
+    dispatch({
+      type: SET_PROJECT_NAME,
+      payload: name
+    });
+  } catch (err) {
+    console.log(err);
+  }
 };

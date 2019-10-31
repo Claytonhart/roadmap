@@ -422,4 +422,28 @@ router.get("/:id/users", auth, async (req, res) => {
   }
 });
 
+// @route   PUT api/project/:id/setProjectName
+// @desc    udpate a project's name by id
+// @access  Private
+router.put("/:id/setProjectName", auth, async (req, res) => {
+  try {
+    const project = await Project.findById(req.params.id);
+
+    if (!project) {
+      return res.status(404).json({ msg: "Project not found" });
+    }
+
+    const { name } = req.body;
+
+    project.name = name;
+
+    await project.save();
+
+    res.json(project);
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send("Server Error");
+  }
+});
+
 module.exports = router;

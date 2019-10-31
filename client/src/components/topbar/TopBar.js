@@ -6,6 +6,7 @@ import { Link } from "react-router-dom";
 
 import DropdownContainer from "../dropdownContainer/DropdownContainer";
 import { logout } from "../../actions/auth";
+import TopBarName from "./TopBarName";
 
 const TopBarContainer = styled.div`
   height: 100px;
@@ -16,17 +17,6 @@ const TopBarContainer = styled.div`
   align-items: center;
   box-shadow: 0 2px 3px 0px rgba(21, 27, 38, 0.15);
   z-index: 10;
-`;
-
-const ProjectTitle = styled.h3`
-  margin-left: 15px;
-  padding: 10px;
-  border-radius: 5px;
-
-  &:hover {
-    background-color: #f6f8f9;
-    cursor: pointer;
-  }
 `;
 
 const Profile = styled.div``;
@@ -75,7 +65,7 @@ const TopBar = ({ project, user, logout }) => {
 
   return (
     <TopBarContainer>
-      {name && <ProjectTitle>{name}</ProjectTitle>}
+      {name && <TopBarName name={name} />}
       <div></div>
       <Profile>
         <ProfileName onClick={() => setShowDropdown(true)}>
