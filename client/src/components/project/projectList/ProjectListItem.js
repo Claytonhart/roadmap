@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import ReactTooltip from "react-tooltip";
-import styled from "styled-components/macro";
+import styled, { css } from "styled-components/macro";
 import axios from "axios";
 import DropdownContainer from "../../dropdownContainer/DropdownContainer";
 import EditProjectModal from "../../sidebar/workspaceItem/createProject/EditProjectModal";
@@ -89,8 +89,17 @@ const DropDownContainerButton = styled.button`
   &:hover {
     background-color: #f6f8f9;
     text-decoration: none;
-    color: #272838;
   }
+
+  ${props =>
+    props.danger &&
+    css`
+      color: ${props.theme.primary.red};
+
+      &:hover {
+        color: ${props.theme.primary.red};
+      }
+    `};
 `;
 
 const ProjectListItem = ({ index, project }) => {
@@ -114,6 +123,10 @@ const ProjectListItem = ({ index, project }) => {
   const editProject = () => {
     setShowModal(true);
     setShowDropdown(false);
+  };
+
+  const deleteProject = () => {
+    console.log("delete project");
   };
 
   return (
@@ -152,6 +165,9 @@ const ProjectListItem = ({ index, project }) => {
             >
               <DropDownContainerButton onClick={editProject}>
                 Project Settings
+              </DropDownContainerButton>
+              <DropDownContainerButton danger onClick={deleteProject}>
+                Delete Project
               </DropDownContainerButton>
             </DropdownContainer>
           )}

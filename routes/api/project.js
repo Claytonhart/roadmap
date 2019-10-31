@@ -49,8 +49,36 @@ router.post("/", auth, async (req, res) => {
   }
 });
 
+// @route   DELETE api/project
+// @desc    create a new project
+// @access  Private
+router.delete("/:id", auth, async (req, res) => {
+  try {
+    // console.log(req.body);
+    const project = await Project.findById(req.params.id);
+
+    if (!project) {
+      return res.status(404).json({ msg: "Project not found" });
+    }
+
+    // Check if user is authenticated
+    // Check if project.users does not include current user's id
+    const userId = new ObjectId(req.user.id);
+    if (!project.users.includes(userId)) {
+      return res.status(401).json({ msg: "User not authorized" });
+    }
+
+    await project.remove();
+
+    res.json({ msg: "Project successfully deleted" });
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send("Server Error");
+  }
+});
+
 // @route   GET api/project/:id
-// @desc    project route
+// @desc    get a project by id
 // @access  Public
 router.get("/:id", async (req, res) => {
   try {
