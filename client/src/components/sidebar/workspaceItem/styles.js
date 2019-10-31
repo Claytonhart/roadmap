@@ -57,3 +57,21 @@ export const WorkspaceItemProjects = styled.ul`
   margin-bottom: 8px;
   text-align: left;
 `;
+
+export const DropDownContainerButton = styled.button`
+  cursor: pointer;
+  padding: 8px 16px;
+  background-color: #fff;
+  text-align: right;
+  display: block;
+  border: none;
+  background-color: transparent;
+  width: 100%;
+  color: #272838;
+
+  &:hover {
+    background-color: #f6f8f9;
+    text-decoration: none;
+    color: #272838;
+  }
+`;

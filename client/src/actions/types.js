@@ -34,3 +34,4 @@ export const ACCOUNT_DELETED = "ACCOUNT_DELETED";
 
 // Current user's projects
 export const GET_CURRENT_USERS_PROJECTS = "GET_CURRENT_USERS_PROJECTS";
+export const SET_PROJECTS_NAME = "SET_PROJECTS_NAME";

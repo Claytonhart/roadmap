@@ -15,7 +15,8 @@ import {
   WorkspaceItemProjects,
   WorkspaceItemIconContainer,
   WorkspaceItemIcon,
-  WorkspaceItemPerson
+  WorkspaceItemPerson,
+  DropDownContainerButton
 } from "./styles";
 import CreateProjectModal from "./createProject/CreateProjectModal";
 
@@ -42,7 +43,9 @@ const WorkspaceItem = ({ title, people, projects }) => {
             </WorkspaceItemIcon>
             {showDropdown && (
               <DropdownContainer callback={setShowDropdown} show={showDropdown}>
-                <button onClick={createProject}>Create new project</button>
+                <DropDownContainerButton onClick={createProject}>
+                  Create new project
+                </DropDownContainerButton>
               </DropdownContainer>
             )}
           </WorkspaceItemIconContainer>

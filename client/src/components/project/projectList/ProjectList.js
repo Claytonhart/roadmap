@@ -10,7 +10,6 @@ const Container = styled.div`
   width: 750px;
   max-width: 750px;
   margin: 60px auto;
-  overflow: auto;
   display: flex;
   flex-direction: column;
 `;
@@ -71,8 +70,12 @@ const ProjectList = ({ getCurrentUsersProjects, projects }) => {
       </ProjectListDesc>
       {!isLoading && (
         <ul>
-          {projects.map(project => (
-            <ProjectListItem key={project._id} project={project} />
+          {projects.map((project, index) => (
+            <ProjectListItem
+              index={index}
+              key={project._id}
+              project={project}
+            />
           ))}
         </ul>
       )}

@@ -3,6 +3,8 @@ import { Link } from "react-router-dom";
 import ReactTooltip from "react-tooltip";
 import styled from "styled-components/macro";
 import axios from "axios";
+import DropdownContainer from "../../dropdownContainer/DropdownContainer";
+import EditProjectModal from "../../sidebar/workspaceItem/createProject/EditProjectModal";
 
 const UserInitials = styled.div`
   display: flex;
@@ -28,6 +30,7 @@ const ProjectListContainer = styled.li`
   justify-content: space-between;
   padding: 16px;
   border-top: 2px solid #dfe1e6;
+  /* position: relative; */
 
   &:last-of-type {
     border-bottom: 2px solid #dfe1e6;
@@ -62,6 +65,7 @@ const ProjectListName = styled.li`
 
 const ProjectListUsersAndSettings = styled.div`
   display: flex;
+  position: relative;
 `;
 
 const ProjectListItemIcon = styled.span`
@@ -71,11 +75,31 @@ const ProjectListItemIcon = styled.span`
   /* opacity: 0; */
 `;
 
-const ProjectListItem = ({ project }) => {
+const DropDownContainerButton = styled.button`
+  cursor: pointer;
+  padding: 8px 16px;
+  background-color: #fff;
+  text-align: right;
+  display: block;
+  border: none;
+  background-color: transparent;
+  width: 100%;
+  color: #272838;
+
+  &:hover {
+    background-color: #f6f8f9;
+    text-decoration: none;
+    color: #272838;
+  }
+`;
+
+const ProjectListItem = ({ index, project }) => {
   const { name, _id: id } = project;
 
   // color, _id, name, email, date, __v
   const [userNames, setUserNames] = useState(null);
+  const [showDropdown, setShowDropdown] = useState(false);
+  const [showModal, setShowModal] = useState(false);
 
   useEffect(() => {
     const getUsers = async () => {
@@ -86,6 +110,11 @@ const ProjectListItem = ({ project }) => {
     };
     getUsers();
   }, [id]);
+
+  const editProject = () => {
+    setShowModal(true);
+    setShowDropdown(false);
+  };
 
   return (
     <ProjectListContainer>
@@ -112,12 +141,31 @@ const ProjectListItem = ({ project }) => {
             })}
           </ProjectListNames>
 
-          <ProjectListItemIcon
-            onClick={() => console.log("edit project details")}
-          >
+          <ProjectListItemIcon onClick={() => setShowDropdown(true)}>
             <i className="fas fa-ellipsis-h"></i>
           </ProjectListItemIcon>
+          {showDropdown && (
+            <DropdownContainer
+              callback={setShowDropdown}
+              show={showDropdown}
+              right="-150px"
+            >
+              <DropDownContainerButton onClick={editProject}>
+                Project Settings
+              </DropDownContainerButton>
+            </DropdownContainer>
+          )}
         </ProjectListUsersAndSettings>
+      )}
+      {showModal && (
+        <EditProjectModal
+          index={index}
+          projectId={id}
+          projectName={name}
+          isVisible={showModal}
+          title={"Project details"}
+          onClose={() => setShowModal(false)}
+        />
       )}
     </ProjectListContainer>
   );
