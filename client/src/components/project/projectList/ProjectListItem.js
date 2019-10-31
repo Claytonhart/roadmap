@@ -1,8 +1,11 @@
 import React, { useEffect, useState } from "react";
+import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import ReactTooltip from "react-tooltip";
 import styled, { css } from "styled-components/macro";
 import axios from "axios";
+
+import { deleteProject } from "../../../actions/projects";
 import DropdownContainer from "../../dropdownContainer/DropdownContainer";
 import EditProjectModal from "../../sidebar/workspaceItem/createProject/EditProjectModal";
 
@@ -102,7 +105,7 @@ const DropDownContainerButton = styled.button`
     `};
 `;
 
-const ProjectListItem = ({ index, project }) => {
+const ProjectListItem = ({ index, project, deleteProject }) => {
   const { name, _id: id } = project;
 
   // color, _id, name, email, date, __v
@@ -125,8 +128,8 @@ const ProjectListItem = ({ index, project }) => {
     setShowDropdown(false);
   };
 
-  const deleteProject = () => {
-    console.log("delete project");
+  const onDeleteProject = () => {
+    deleteProject(id);
   };
 
   return (
@@ -166,7 +169,7 @@ const ProjectListItem = ({ index, project }) => {
               <DropDownContainerButton onClick={editProject}>
                 Project Settings
               </DropDownContainerButton>
-              <DropDownContainerButton danger onClick={deleteProject}>
+              <DropDownContainerButton danger onClick={onDeleteProject}>
                 Delete Project
               </DropDownContainerButton>
             </DropdownContainer>
@@ -187,4 +190,7 @@ const ProjectListItem = ({ index, project }) => {
   );
 };
 
-export default ProjectListItem;
+export default connect(
+  null,
+  { deleteProject }
+)(ProjectListItem);

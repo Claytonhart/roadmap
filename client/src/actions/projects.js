@@ -1,11 +1,13 @@
 import axios from "axios";
-import { GET_CURRENT_USERS_PROJECTS, SET_PROJECTS_NAME } from "./types";
+import {
+  GET_CURRENT_USERS_PROJECTS,
+  SET_PROJECTS_NAME,
+  DELETE_PROJECT
+} from "./types";
 
 export const getCurrentUsersProjects = () => async dispatch => {
   try {
     const res = await axios.get(`/api/project`);
-    console.log(res);
-    console.log(res.data);
 
     dispatch({
       type: GET_CURRENT_USERS_PROJECTS,
@@ -28,6 +30,19 @@ export const setProjectsName = (index, id, name) => async dispatch => {
         index,
         name
       }
+    });
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+export const deleteProject = id => async dispatch => {
+  try {
+    await axios.delete(`/api/project/${id}`);
+
+    dispatch({
+      type: DELETE_PROJECT,
+      payload: id
     });
   } catch (err) {
     console.log(err);
