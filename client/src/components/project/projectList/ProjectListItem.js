@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import ReactTooltip from "react-tooltip";
 import styled from "styled-components/macro";
 import axios from "axios";
 
@@ -94,15 +95,18 @@ const ProjectListItem = ({ project }) => {
       {userNames && (
         <ProjectListUsersAndSettings>
           <ProjectListNames>
-            {userNames.map(user => {
+            {userNames.map((user, i) => {
               // const { color, _id: id, name, email, date, __v: version } = user;
               const { color, _id: id, name } = user;
 
               return (
                 <ProjectListName key={id}>
-                  <UserInitials color={color}>
+                  <UserInitials color={color} data-tip data-for={i + name}>
                     {name.substring(0, 2)}
                   </UserInitials>
+                  <ReactTooltip id={i + name}>
+                    <span>{name}</span>
+                  </ReactTooltip>
                 </ProjectListName>
               );
             })}
