@@ -1,7 +1,7 @@
 import axios from "axios";
 import uuid from "uuid";
 
-import { CREATE_NEW_PROJECT } from "./types";
+import { CREATE_NEW_PROJECT, CLEAR_PROJECT } from "./types";
 
 export const createNewProject = name => async dispatch => {
   try {
@@ -54,4 +54,10 @@ export const createNewProject = name => async dispatch => {
   } catch (err) {
     console.log(err);
   }
+};
+
+export const clearProject = () => {
+  return {
+    type: CLEAR_PROJECT
+  };
 };

@@ -10,6 +10,8 @@ export const DELETE_TASK = "DELETE_TASK";
 export const DELETE_COLUMN = "DELETE_COLUMN";
 export const CREATE_NEW_COLUMN = "CREATE_NEW_COLUMN";
 export const GET_BOARD_BY_ID = "GET_BOARD_BY_ID";
+export const CLEAR_BOARD = "CLEAR_BOARD";
+export const CLEAR_PROJECT = "CLEAR_PROJECT";
 
 // Alerts
 export const SET_ALERT = "SET_ALERT";

@@ -75,7 +75,7 @@ const TopBar = ({ project, user, logout }) => {
 
   return (
     <TopBarContainer>
-      <ProjectTitle>{name}</ProjectTitle>
+      {name && <ProjectTitle>{name}</ProjectTitle>}
       <div></div>
       <Profile>
         <ProfileName onClick={() => setShowDropdown(true)}>

@@ -1,4 +1,8 @@
-import { SET_PROJECT_DATA, CREATE_NEW_PROJECT } from "../actions/types";
+import {
+  SET_PROJECT_DATA,
+  CREATE_NEW_PROJECT,
+  CLEAR_PROJECT
+} from "../actions/types";
 
 const initialState = {
   name: null,
@@ -16,9 +20,13 @@ export default function(state = initialState, action) {
         ...payload
       };
     }
+    case CLEAR_PROJECT: {
+      return {
+        ...initialState
+      };
+    }
     case CREATE_NEW_PROJECT: {
       const id = payload;
-      debugger;
       return {
         ...state,
         projectId: id

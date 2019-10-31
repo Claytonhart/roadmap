@@ -9,7 +9,8 @@ import {
   DELETE_TASK,
   DELETE_COLUMN,
   CREATE_NEW_COLUMN,
-  GET_BOARD_BY_ID
+  GET_BOARD_BY_ID,
+  CLEAR_BOARD
 } from "../actions/types";
 
 // const initialState = {
@@ -56,6 +57,11 @@ export default function(state = initialState, action) {
       const board = payload;
 
       return board || state;
+    }
+    case CLEAR_BOARD: {
+      return {
+        ...initialState
+      };
     }
     case SET_COLUMN_ORDER: {
       return {

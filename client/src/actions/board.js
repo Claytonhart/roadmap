@@ -15,7 +15,8 @@ import {
   DELETE_COLUMN,
   CREATE_NEW_COLUMN,
   GET_BOARD_BY_ID,
-  SET_PROJECT_DATA
+  SET_PROJECT_DATA,
+  CLEAR_BOARD
 } from "./types";
 
 import initialData from "../initial-data";
@@ -55,6 +56,12 @@ export const getBoardById = projectId => async dispatch => {
     console.log(err);
     return null;
   }
+};
+
+export const clearBoard = () => {
+  return {
+    type: CLEAR_BOARD
+  };
 };
 
 export const setColumnOrder = (projectId, order) => async dispatch => {

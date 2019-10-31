@@ -8,8 +8,11 @@ import {
   setColumnOrder,
   setTaskInSameColumn,
   setTaskInNewColumn,
-  getBoardById
+  getBoardById,
+  clearBoard
 } from "../../actions/board";
+
+import { clearProject } from "../../actions/project";
 
 import Column from "./column/Column";
 import NewColumn from "./newColumn/NewColumn";
@@ -42,7 +45,9 @@ const Board = ({
   setTaskInSameColumn,
   setTaskInNewColumn,
   getBoardById,
-  history
+  history,
+  clearBoard,
+  clearProject
 }) => {
   let { projectId } = useParams();
 
@@ -60,6 +65,13 @@ const Board = ({
     // debugger;
     setIsLoading(false);
   }, [getBoardById, projectId, history]);
+
+  useEffect(() => {
+    return () => {
+      clearBoard();
+      clearProject();
+    };
+  }, [clearBoard, clearProject]);
 
   const onDragEnd = async result => {
     const { destination, source, draggableId, type } = result;
@@ -169,7 +181,9 @@ export default withRouter(
       setColumnOrder,
       setTaskInSameColumn,
       setTaskInNewColumn,
-      getBoardById
+      getBoardById,
+      clearBoard,
+      clearProject
     }
   )(Board)
 );

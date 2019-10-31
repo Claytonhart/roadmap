@@ -52,10 +52,22 @@ const ProjectListTitle = styled.h3`
 const ProjectListNames = styled.ul`
   display: flex;
   margin: 0;
+  margin-right: 10px;
 `;
 
 const ProjectListName = styled.li`
   margin: 0;
+`;
+
+const ProjectListUsersAndSettings = styled.div`
+  display: flex;
+`;
+
+const ProjectListItemIcon = styled.span`
+  cursor: pointer;
+  margin-left: 35px;
+
+  /* opacity: 0; */
 `;
 
 const ProjectListItem = ({ project }) => {
@@ -80,20 +92,28 @@ const ProjectListItem = ({ project }) => {
         {name}
       </ProjectListTitle>
       {userNames && (
-        <ProjectListNames>
-          {userNames.map(user => {
-            // const { color, _id: id, name, email, date, __v: version } = user;
-            const { color, _id: id, name } = user;
+        <ProjectListUsersAndSettings>
+          <ProjectListNames>
+            {userNames.map(user => {
+              // const { color, _id: id, name, email, date, __v: version } = user;
+              const { color, _id: id, name } = user;
 
-            return (
-              <ProjectListName key={id}>
-                <UserInitials color={color}>
-                  {name.substring(0, 2)}
-                </UserInitials>
-              </ProjectListName>
-            );
-          })}
-        </ProjectListNames>
+              return (
+                <ProjectListName key={id}>
+                  <UserInitials color={color}>
+                    {name.substring(0, 2)}
+                  </UserInitials>
+                </ProjectListName>
+              );
+            })}
+          </ProjectListNames>
+
+          <ProjectListItemIcon
+            onClick={() => console.log("edit project details")}
+          >
+            <i className="fas fa-ellipsis-h"></i>
+          </ProjectListItemIcon>
+        </ProjectListUsersAndSettings>
       )}
     </ProjectListContainer>
   );

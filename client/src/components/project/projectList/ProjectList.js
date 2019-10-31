@@ -33,6 +33,7 @@ const ProjectListName = styled.h4`
 const ProjectListUsers = styled.p`
   font-size: 14px;
   margin: 0;
+  margin-right: 10px;
 `;
 
 const ProjectCreateButton = styled.button`
@@ -43,6 +44,10 @@ const ProjectCreateButton = styled.button`
   align-self: flex-end;
   margin-top: 30px;
   cursor: pointer;
+`;
+
+const ProjectListUsersAndSettings = styled.div`
+  display: flex;
 `;
 
 const ProjectList = ({ getCurrentUsersProjects, projects }) => {
@@ -59,7 +64,10 @@ const ProjectList = ({ getCurrentUsersProjects, projects }) => {
       <ProjectListHeader>Projects</ProjectListHeader>
       <ProjectListDesc>
         <ProjectListName>Name</ProjectListName>
-        <ProjectListUsers>Users</ProjectListUsers>
+        <ProjectListUsersAndSettings>
+          <ProjectListUsers>Users</ProjectListUsers>
+          <div>Settings</div>
+        </ProjectListUsersAndSettings>
       </ProjectListDesc>
       {!isLoading && (
         <ul>
