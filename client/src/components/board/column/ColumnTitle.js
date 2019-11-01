@@ -3,12 +3,15 @@ import { connect } from "react-redux";
 import { useParams } from "react-router-dom";
 import { deleteColumn } from "../../../actions/board";
 
+import DropdownContainer from "../../dropdownContainer/DropdownContainer";
 import ColumnTitleInput from "./ColumnTitleInput";
 
 import {
   Title,
   ColumnTitleContainer,
-  ColumnTitleIconContainer
+  ColumnTitleIconContainer,
+  ColumnTitleDelete,
+  ColumnRight
 } from "./styles";
 
 const ColumnTitle = ({ column, provided, deleteColumn }) => {
@@ -17,19 +20,34 @@ const ColumnTitle = ({ column, provided, deleteColumn }) => {
   const { title } = column;
 
   const [isSelected, setIsSelected] = useState(false);
+  const [showDropdown, setShowDropdown] = useState(false);
 
-  const showDropdown = e => {
+  const showDropdownMenu = e => {
     e.stopPropagation();
-    console.log("clicked delete column");
-    deleteColumn(projectId, column);
+    setShowDropdown(true);
+    // deleteColumn(projectId, column);
   };
 
   const titleToRender = !isSelected ? (
     <Title {...provided.dragHandleProps} onClick={() => setIsSelected(true)}>
       {title}
-      <ColumnTitleIconContainer onClick={showDropdown}>
-        <i className="fas fa-ellipsis-h"></i>
-      </ColumnTitleIconContainer>
+      <ColumnRight>
+        <ColumnTitleIconContainer onClick={showDropdownMenu}>
+          <i className="fas fa-ellipsis-h"></i>
+        </ColumnTitleIconContainer>
+        {showDropdown && (
+          <DropdownContainer
+            callback={setShowDropdown}
+            show={showDropdown}
+            left={"20px"}
+            top={"0px"}
+          >
+            <ColumnTitleDelete onClick={() => deleteColumn(projectId, column)}>
+              Delete Column
+            </ColumnTitleDelete>
+          </DropdownContainer>
+        )}
+      </ColumnRight>
     </Title>
   ) : (
     <ColumnTitleInput column={column} setIsSelected={setIsSelected} />

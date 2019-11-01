@@ -60,10 +60,9 @@ const Board = ({
         history.push("/project");
       }
     }
-    fetchBoard();
-
-    // debugger;
-    setIsLoading(false);
+    fetchBoard().then(() => {
+      setIsLoading(false);
+    });
   }, [getBoardById, projectId, history]);
 
   useEffect(() => {
@@ -137,7 +136,8 @@ const Board = ({
 
   return (
     <DragDropContext onDragEnd={onDragEnd}>
-      {!isLoading & (boardState.columnOrder.length > 0) ? (
+      {/* {!isLoading & (boardState.columnOrder.length > 0) ? ( */}
+      {!isLoading ? (
         <Droppable
           droppableId="all-columns"
           direction="horizontal"

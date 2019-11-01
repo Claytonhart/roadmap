@@ -105,6 +105,10 @@ const DropDownContainerButton = styled.button`
     `};
 `;
 
+const ProjectListTooltip = styled.span`
+  text-transform: capitalize;
+`;
+
 const ProjectListItem = ({ index, project, deleteProject }) => {
   const { name, _id: id } = project;
 
@@ -153,7 +157,7 @@ const ProjectListItem = ({ index, project, deleteProject }) => {
                     {name.substring(0, 2)}
                   </UserInitials>
                   <ReactTooltip id={i + name}>
-                    <span>{name}</span>
+                    <ProjectListTooltip>{name}</ProjectListTooltip>
                   </ReactTooltip>
                 </ProjectListName>
               );

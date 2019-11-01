@@ -13,6 +13,7 @@ const UserInputSearch = styled(DebounceInput)`
 
 const UsersElement = styled.li`
   padding: 8px 0;
+  text-transform: capitalize;
 `;
 
 const UsersIcon = styled.span`

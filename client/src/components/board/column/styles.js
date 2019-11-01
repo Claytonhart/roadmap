@@ -32,7 +32,7 @@ export const ColumnTasksContainer = styled.div`
 export const ColumnTitleContainer = styled.div`
   min-height: 61px;
   border-bottom: 2px solid #151b26;
-  z-index: 2;
+  /* z-index: 2; */
 
   display: flex;
   justify-content: space-between;
@@ -46,6 +46,29 @@ export const ColumnTitleIconContainer = styled.span`
   transition: opacity 0.2s;
 `;
 
+export const ColumnTitleDelete = styled.button`
+  cursor: pointer;
+  padding: 8px 16px;
+  background-color: #fff;
+  text-align: right;
+  display: block;
+  border: none;
+  background-color: transparent;
+  width: 100%;
+  color: #272838;
+  white-space: nowrap;
+
+  &:hover {
+    background-color: #f6f8f9;
+    text-decoration: none;
+    color: #272838;
+  }
+`;
+
+export const ColumnRight = styled.div`
+  position: relative;
+`;
+
 export const Title = styled.h3`
   padding: 16px;
   flex: 1;
@@ -53,7 +76,7 @@ export const Title = styled.h3`
   display: flex;
   justify-content: space-between;
 
-  &:hover > span {
+  &:hover span {
     opacity: 1;
   }
 `;

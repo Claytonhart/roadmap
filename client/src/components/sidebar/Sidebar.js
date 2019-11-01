@@ -122,7 +122,7 @@ const Sidebar = ({ projects, getCurrentUsersProjects }) => {
         <NavTitle as={Link} to="/">
           Roadmap
         </NavTitle>
-        <NavLinks>Links</NavLinks>
+        <NavLinks></NavLinks>
       </NavContainer>
       <NavContentHeaderContainer>
         <NavContentHeaderLink to="/project">
@@ -233,7 +233,7 @@ const Sidebar = ({ projects, getCurrentUsersProjects }) => {
       ) : (
         <NavContent></NavContent>
       )}
-      <NavFooter>Invite To Roadmap!</NavFooter>
+      <NavFooter>Roadmap 2019</NavFooter>
     </Container>
   );
 };

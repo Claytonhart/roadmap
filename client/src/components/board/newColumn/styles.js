@@ -16,7 +16,7 @@ export const Container = styled.div`
 export const NewColumnTitleContainer = styled.div`
   min-height: 61px;
   border-bottom: 2px solid #151b26;
-  z-index: 2;
+  /* z-index: 2; */
   display: flex;
   justify-content: space-between;
   align-items: center;

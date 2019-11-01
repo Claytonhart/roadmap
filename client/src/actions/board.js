@@ -30,8 +30,6 @@ export const getBoard = () => {
 
 export const getBoardById = projectId => async dispatch => {
   try {
-    console.log(projectId);
-    console.log(typeof projectId);
     const res = await axios.get(`/api/project/${projectId}`);
     const { data } = res;
     const { board, date, name, _id: id } = data;
@@ -118,13 +116,11 @@ export const setTaskInSameColumn = (projectId, taskOrder) => async dispatch => {
       payload: taskOrder
     });
 
-    const res = await axios.put(
+    await axios.put(
       `/api/project/${projectId}/setTaskInSameColumn`,
       body,
       config
     );
-
-    console.log(res.data);
   } catch (err) {
     console.log(err);
   }
@@ -154,13 +150,11 @@ export const setTaskInNewColumn = (
       }
     });
 
-    const res = await axios.put(
+    await axios.put(
       `/api/project/${projectId}/setTaskInNewColumn`,
       body,
       config
     );
-
-    console.log(res.data);
   } catch (err) {
     console.log(err);
   }
@@ -185,12 +179,7 @@ export const setColumnTitle = (projectId, title, column) => async dispatch => {
       }
     });
 
-    const res = await axios.put(
-      `/api/project/${projectId}/setColumnTitle`,
-      body,
-      config
-    );
-    console.log(res.data);
+    await axios.put(`/api/project/${projectId}/setColumnTitle`, body, config);
   } catch (err) {
     console.log(err);
   }
@@ -219,13 +208,7 @@ export const updateExistingTask = (
       }
     });
 
-    const res = await axios.put(
-      `/api/project/${projectId}/setTaskTitle`,
-      body,
-      config
-    );
-
-    console.log(res.data);
+    await axios.put(`/api/project/${projectId}/setTaskTitle`, body, config);
   } catch (err) {
     console.log(err);
   }
@@ -254,13 +237,7 @@ export const createNewTask = (projectId, column, content) => async dispatch => {
       }
     });
 
-    const res = await axios.put(
-      `/api/project/${projectId}/createNewTask`,
-      body,
-      config
-    );
-
-    console.log(res.data);
+    await axios.put(`/api/project/${projectId}/createNewTask`, body, config);
   } catch (err) {
     console.log(err);
   }
@@ -278,11 +255,9 @@ export const deleteTask = (projectId, column, task) => async dispatch => {
       }
     });
 
-    const res = await axios.delete(
+    await axios.delete(
       `/api/project/${projectId}/deleteTask/${column.id}/${task.id}`
     );
-
-    console.log(res.data);
   } catch (err) {
     console.log(err);
   }
@@ -297,11 +272,7 @@ export const deleteColumn = (projectId, column) => async dispatch => {
       payload: column
     });
 
-    const res = await axios.delete(
-      `/api/project/${projectId}/deleteColumn/${column.id}`
-    );
-
-    console.log(res.data);
+    await axios.delete(`/api/project/${projectId}/deleteColumn/${column.id}`);
   } catch (err) {
     console.log(err);
   }
@@ -335,12 +306,7 @@ export const createNewColumn = (projectId, title) => async dispatch => {
       }
     });
 
-    const res = await axios.put(
-      `/api/project/${projectId}/createColumn`,
-      body,
-      config
-    );
-    console.log(res);
+    await axios.put(`/api/project/${projectId}/createColumn`, body, config);
   } catch (err) {
     console.log(err);
   }

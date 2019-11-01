@@ -37,6 +37,10 @@ const UserInitials = styled.div`
   cursor: pointer;
 `;
 
+const AddUsersTooltip = styled.span`
+  text-transform: capitalize;
+`;
+
 const AddUsers = ({ project, index }) => {
   const { _id: id } = project;
   // ["users"], _id, name, date, __v = project
@@ -72,7 +76,7 @@ const AddUsers = ({ project, index }) => {
                   {name.substring(0, 2)}
                 </UserInitials>
                 <ReactTooltip id={index + name}>
-                  <span>{name}</span>
+                  <AddUsersTooltip>{name}</AddUsersTooltip>
                 </ReactTooltip>
               </AddUsersListName>
             );

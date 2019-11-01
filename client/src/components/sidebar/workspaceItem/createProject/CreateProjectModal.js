@@ -10,7 +10,7 @@ import {
   ModalHeader,
   ModalTitle,
   ModalInputDesc,
-  ModalInputPeople,
+  // ModalInputPeople,
   ModalClose,
   ModalBody,
   ModalContent,
@@ -93,7 +93,7 @@ const CreateProjectModal = ({
                 value={projectDesc}
                 onChange={e => onChange(e)}
               />
-              <ModalInputPeople>Add people to the project</ModalInputPeople>
+              {/* <ModalInputPeople>Add people to the project</ModalInputPeople> */}
               <ModalFooterButton onClick={onFormSubmit}>
                 Create Your New Project
               </ModalFooterButton>
