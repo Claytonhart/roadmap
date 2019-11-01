@@ -78,14 +78,36 @@ router.post(
   }
 );
 
-// @route   GET api/users
-// @desc    get other use by id
+// @route   GET api/users/:id
+// @desc    get other user by id
 // @access  Private
 router.get("/:id", auth, async (req, res) => {
   try {
     const user = await User.findById(req.params.id).select("-password");
     // returns null if no user
     res.json(user);
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send("Server Error");
+  }
+});
+
+// @route   GET api/users/name/:name
+// @desc    get other user by id
+// @access  Private
+router.get("/name/:name", auth, async (req, res) => {
+  try {
+    // search users by name starting with req.params.name
+    // returns an object of users
+    const users = await User.find({
+      name: { $regex: "^" + req.params.name }
+    })
+      .select("-password")
+      .limit(5);
+    console.log(typeof users);
+
+    // returns null if no user
+    res.json(users);
   } catch (err) {
     console.error(err.message);
     res.status(500).send("Server Error");

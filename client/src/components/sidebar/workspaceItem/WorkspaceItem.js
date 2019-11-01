@@ -35,7 +35,7 @@ const WorkspaceItem = ({ index, title, id }) => {
     const getUsers = async () => {
       const res = await axios.get(`/api/project/${id}/users`);
       const tempUsers = res.data;
-      const threeUsers = tempUsers.slice(0, 2);
+      const threeUsers = tempUsers.slice(0, 3);
       // debugger;
       setPeople(threeUsers);
     };
@@ -73,7 +73,10 @@ const WorkspaceItem = ({ index, title, id }) => {
         <WorkspaceItemPeople>
           {people &&
             people.map((person, i) => {
-              // debugger;
+              if (!person) {
+                return null;
+              }
+
               return (
                 <WorkspaceItemPerson
                   style={{ backgroundColor: person.color }}

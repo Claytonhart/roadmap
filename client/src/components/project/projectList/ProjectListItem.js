@@ -117,7 +117,7 @@ const ProjectListItem = ({ index, project, deleteProject }) => {
     const getUsers = async () => {
       const res = await axios.get(`/api/project/${id}/users`);
       const tempUsers = res.data;
-      const threeUsers = tempUsers.slice(0, 2);
+      const threeUsers = tempUsers.slice(0, 3);
       setUserNames(threeUsers);
     };
     getUsers();
@@ -142,6 +142,9 @@ const ProjectListItem = ({ index, project, deleteProject }) => {
           <ProjectListNames>
             {userNames.map((user, i) => {
               // const { color, _id: id, name, email, date, __v: version } = user;
+              if (!user) {
+                return null;
+              }
               const { color, _id: id, name } = user;
 
               return (

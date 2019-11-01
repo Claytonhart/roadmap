@@ -2,7 +2,8 @@ import {
   GET_CURRENT_USERS_PROJECTS,
   SET_PROJECTS_NAME,
   DELETE_PROJECT,
-  CREATE_NEW_PROJECT
+  CREATE_NEW_PROJECT,
+  ADD_USER_TO_PROJECT
 } from "../actions/types";
 
 const initialState = [];
@@ -35,6 +36,19 @@ export default function(state = initialState, action) {
     case DELETE_PROJECT: {
       const id = payload;
       return state.filter(project => project._id !== id);
+    }
+    case ADD_USER_TO_PROJECT: {
+      const { user, index } = payload;
+
+      return state.map((project, i) => {
+        if (i !== index) {
+          return project;
+        }
+        return {
+          ...project,
+          users: [...project.users, user]
+        };
+      });
     }
     default:
       return state;

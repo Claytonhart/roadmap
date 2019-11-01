@@ -19,6 +19,7 @@ import {
   ModalForm
 } from "./styles";
 import { setAlert } from "../../../../actions/alert";
+import AddUsers from "./addUsers/AddUsers";
 
 const EditProjectModal = ({
   isVisible = false,
@@ -94,11 +95,12 @@ const EditProjectModal = ({
                 onChange={e => onChange(e)}
               />
               <ModalInputPeople>Add people to the project</ModalInputPeople>
-              {/* allow searching all users to display */}
-              <ModalFooterButton onClick={onFormSubmit}>
-                Update Project Settings
-              </ModalFooterButton>
             </ModalForm>
+            <AddUsers index={index} />
+            {/* allow searching all users to display */}
+            <ModalFooterButton onClick={onFormSubmit}>
+              Update Project Settings
+            </ModalFooterButton>
             {content}
           </ModalContent>
         </ModalBody>

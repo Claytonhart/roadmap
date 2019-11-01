@@ -126,6 +126,8 @@ export const ModalBody = styled.div`
 `;
 
 export const ModalContent = styled.div`
+  display: flex;
+  flex-direction: column;
   padding: 1rem;
   max-width: 75%;
   margin: 40px auto;

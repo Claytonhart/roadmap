@@ -413,7 +413,7 @@ router.delete("/:id/deleteColumn/:columnId", async (req, res) => {
 });
 
 // @route   GET api/project/:id/users
-// @desc    get other use by id
+// @desc    get a project's users
 // @access  Private
 router.get("/:id/users", auth, async (req, res) => {
   try {
@@ -444,6 +444,43 @@ router.get("/:id/users", auth, async (req, res) => {
     const userData = await Promise.all(usersPromiseArray);
 
     res.json(userData);
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send("Server Error");
+  }
+});
+
+// @route   PUT api/project/:id/users
+// @desc    add a user / users to a project
+// @access  Private
+router.put("/:id/user", auth, async (req, res) => {
+  try {
+    const newUserId = new ObjectId(req.body.user);
+
+    let project;
+    // Check if the id is a 12 char string
+    if (ObjectId.isValid(req.params.id)) {
+      const newObjectId = new ObjectId(req.params.id).toString();
+      if (newObjectId === req.params.id) {
+        project = await Project.findById(req.params.id);
+      }
+    } else {
+      return res.status(404).json({ msg: "Invalid object id" });
+    }
+
+    if (!project) {
+      return res.status(404).json({ msg: "Project not found" });
+    }
+
+    if (project.users.includes(newUserId)) {
+      return res.status(304).json({ msg: "User is already in this project" });
+    }
+
+    project.users = [...project.users, newUserId];
+
+    await project.save();
+
+    res.json(project);
   } catch (err) {
     console.error(err.message);
     res.status(500).send("Server Error");
