@@ -1,8 +1,11 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import styled from "styled-components/macro";
 
+import { getCurrentUsersProjects } from "../../actions/projects";
 import WorkspaceItem from "./workspaceItem/WorkspaceItem";
+import CreateProjectModal from "./workspaceItem/createProject/CreateProjectModal";
 
 const Container = styled.div`
   width: 244px;
@@ -53,10 +56,40 @@ const NavContent = styled.div`
   }
 `;
 
-const NavContentHeader = styled.h3`
+const NavContentHeaderContainer = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   border-bottom: 2px solid ${props => props.theme.primary.lightgrey};
+  padding: 8px;
+
+  transition: all 0.2s;
+
+  &:hover {
+    > span {
+      opacity: 1;
+    }
+  }
+`;
+
+const NavContentHeaderLink = styled(Link)`
+  &:focus {
+    outline: none;
+  }
+
+  &:hover,
+  &:focus {
+    text-decoration-color: #fff;
+  }
+`;
+
+const NavContentHeader = styled.h3`
   color: ${props => props.theme.primary.white};
-  padding-bottom: 8px;
+`;
+
+const NavContentHeaderIcon = styled.span`
+  opacity: 0;
+  cursor: pointer;
 `;
 
 const NavFooter = styled.div`
@@ -70,7 +103,19 @@ const NavFooter = styled.div`
   }
 `;
 
-const Sidebar = () => {
+const Sidebar = ({ projects, getCurrentUsersProjects }) => {
+  const [isLoading, setIsLoading] = useState(true);
+  const [showCreateProjectModal, setShowCreateProjectModal] = useState(false);
+
+  useEffect(() => {
+    getCurrentUsersProjects().then(() => setIsLoading(false));
+  }, [getCurrentUsersProjects]);
+
+  const createProject = () => {
+    // setShowDropdown(false);
+    setShowCreateProjectModal(true);
+  };
+
   return (
     <Container>
       <NavContainer>
@@ -79,10 +124,32 @@ const Sidebar = () => {
         </NavTitle>
         <NavLinks>Links</NavLinks>
       </NavContainer>
-      <NavContentHeader>Your Workspaces</NavContentHeader>
-      <NavContent>
-        <WorkspaceItem
-          title="Workspace 1"
+      <NavContentHeaderContainer>
+        <NavContentHeaderLink to="/project">
+          <NavContentHeader>Your Projects</NavContentHeader>
+        </NavContentHeaderLink>
+        <NavContentHeaderIcon onClick={createProject}>
+          <i className="fas fa-plus"></i>
+        </NavContentHeaderIcon>
+        {showCreateProjectModal && (
+          <CreateProjectModal
+            isVisible={showCreateProjectModal}
+            title={"Create a new project"}
+            onClose={() => setShowCreateProjectModal(false)}
+            setShouldUpdate={() => {}}
+          />
+        )}
+      </NavContentHeaderContainer>
+      {!isLoading ? (
+        <NavContent>
+          {projects.map((project, index) => {
+            const { _id: id, name } = project;
+            return (
+              <WorkspaceItem index={index} key={id} title={name} id={id} />
+            );
+          })}
+          {/* <WorkspaceItem
+          title="Project 1"
           people={[
             {
               color: "salmon",
@@ -161,146 +228,21 @@ const Sidebar = () => {
               name: "Project 2"
             }
           ]}
-        />
-        <WorkspaceItem
-          title="Workspace 2"
-          people={[
-            {
-              color: "orange",
-              initials: "DA"
-            },
-            {
-              color: "salmon",
-              initials: "WE"
-            },
-            {
-              color: "lightblue",
-              initials: "OM"
-            }
-          ]}
-          projects={[
-            {
-              color: "pink",
-              name: "Not Project 3"
-            },
-            {
-              color: "orange",
-              name: "Project 5"
-            }
-          ]}
-        />
-        <WorkspaceItem
-          title="Workspace 1"
-          people={[
-            {
-              color: "salmon",
-              initials: "CH"
-            },
-            {
-              color: "green",
-              initials: "JK"
-            },
-            {
-              color: "orange",
-              initials: "HI"
-            }
-          ]}
-          projects={[
-            {
-              color: "blue",
-              name: "Project 1"
-            },
-            {
-              color: "red",
-              name: "Project 2"
-            }
-          ]}
-        />
-        <WorkspaceItem
-          title="Workspace 2"
-          people={[
-            {
-              color: "orange",
-              initials: "DA"
-            },
-            {
-              color: "salmon",
-              initials: "WE"
-            },
-            {
-              color: "lightblue",
-              initials: "OM"
-            }
-          ]}
-          projects={[
-            {
-              color: "pink",
-              name: "Not Project 3"
-            },
-            {
-              color: "orange",
-              name: "Project 5"
-            }
-          ]}
-        />
-        <WorkspaceItem
-          title="Workspace 1"
-          people={[
-            {
-              color: "salmon",
-              initials: "CH"
-            },
-            {
-              color: "green",
-              initials: "JK"
-            },
-            {
-              color: "orange",
-              initials: "HI"
-            }
-          ]}
-          projects={[
-            {
-              color: "blue",
-              name: "Project 1"
-            },
-            {
-              color: "red",
-              name: "Project 2"
-            }
-          ]}
-        />
-        <WorkspaceItem
-          title="Workspace 2"
-          people={[
-            {
-              color: "orange",
-              initials: "DA"
-            },
-            {
-              color: "salmon",
-              initials: "WE"
-            },
-            {
-              color: "lightblue",
-              initials: "OM"
-            }
-          ]}
-          projects={[
-            {
-              color: "pink",
-              name: "Not Project 3"
-            },
-            {
-              color: "orange",
-              name: "Project 5"
-            }
-          ]}
-        />
-      </NavContent>
+        /> */}
+        </NavContent>
+      ) : (
+        <NavContent></NavContent>
+      )}
       <NavFooter>Invite To Roadmap!</NavFooter>
     </Container>
   );
 };
 
-export default Sidebar;
+const mapStateToProps = state => ({
+  projects: state.projects
+});
+
+export default connect(
+  mapStateToProps,
+  { getCurrentUsersProjects }
+)(Sidebar);

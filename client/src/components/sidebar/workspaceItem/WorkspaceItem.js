@@ -1,6 +1,7 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
+import axios from "axios";
 
 import { createNewProject } from "../../../actions/project";
 import ProjectItem from "./projectItem/ProjectItem";
@@ -18,15 +19,31 @@ import {
   WorkspaceItemPerson,
   DropDownContainerButton
 } from "./styles";
-import CreateProjectModal from "./createProject/CreateProjectModal";
 
-const WorkspaceItem = ({ title, people, projects }) => {
+import EditProjectModal from "./createProject/EditProjectModal";
+
+const WorkspaceItem = ({ index, title, id }) => {
+  const [people, setPeople] = useState(null);
+
   const [showDropdown, setShowDropdown] = useState(false);
-  const [showCreateProjectModal, setShowCreateProjectModal] = useState(false);
 
-  const createProject = async () => {
-    setShowDropdown(false);
-    setShowCreateProjectModal(true);
+  const [showEditProjectModal, setShowEditProjectModal] = useState(false);
+  // const [shouldUpdate, setShouldUpdate] = useState(true);
+
+  useEffect(() => {
+    // debugger;
+    const getUsers = async () => {
+      const res = await axios.get(`/api/project/${id}/users`);
+      const tempUsers = res.data;
+      const threeUsers = tempUsers.slice(0, 2);
+      // debugger;
+      setPeople(threeUsers);
+    };
+    getUsers();
+  }, [id]);
+
+  const editProject = () => {
+    setShowEditProjectModal(true);
   };
 
   return (
@@ -43,35 +60,55 @@ const WorkspaceItem = ({ title, people, projects }) => {
             </WorkspaceItemIcon>
             {showDropdown && (
               <DropdownContainer callback={setShowDropdown} show={showDropdown}>
-                <DropDownContainerButton onClick={createProject}>
-                  Create new project
+                <DropDownContainerButton onClick={editProject}>
+                  Project settings
                 </DropDownContainerButton>
+                {/* <DropDownContainerButton onClick={createProject}>
+                  Create new project
+                </DropDownContainerButton> */}
               </DropdownContainer>
             )}
           </WorkspaceItemIconContainer>
         </WorkspaceItemTitleContainer>
         <WorkspaceItemPeople>
-          {people.map((person, i) => (
-            <WorkspaceItemPerson
-              style={{ backgroundColor: person.color }}
-              key={i}
-            >
-              {person.initials}
-            </WorkspaceItemPerson>
-          ))}
+          {people &&
+            people.map((person, i) => {
+              // debugger;
+              return (
+                <WorkspaceItemPerson
+                  style={{ backgroundColor: person.color }}
+                  key={i}
+                >
+                  {/* {person.name} */}
+                  {person.name.substring(0, 2)}
+                </WorkspaceItemPerson>
+              );
+            })}
         </WorkspaceItemPeople>
         <WorkspaceItemProjects>
-          {projects.map((project, i) => (
+          {/* object with .color and .name */}
+          <ProjectItem
+            projectId={id}
+            project={{ color: "blue", name: "Board" }}
+          />
+          <ProjectItem
+            onClick={editProject}
+            project={{ color: "red", name: "Project Details" }}
+          />
+          {/* {projects.map((project, i) => (
             // project.name, .link, .color, .abilitytodelete
             <ProjectItem key={i} project={project} />
-          ))}
+          ))} */}
         </WorkspaceItemProjects>
       </Container>
-      {showCreateProjectModal && (
-        <CreateProjectModal
-          isVisible={showCreateProjectModal}
-          title={"Create a new project"}
-          onClose={() => setShowCreateProjectModal(false)}
+      {showEditProjectModal && (
+        <EditProjectModal
+          index={index}
+          projectId={id}
+          projectName={title}
+          isVisible={showEditProjectModal}
+          title={"Project details"}
+          onClose={() => setShowEditProjectModal(false)}
         />
       )}
     </>

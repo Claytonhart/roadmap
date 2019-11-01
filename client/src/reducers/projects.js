@@ -1,7 +1,8 @@
 import {
   GET_CURRENT_USERS_PROJECTS,
   SET_PROJECTS_NAME,
-  DELETE_PROJECT
+  DELETE_PROJECT,
+  CREATE_NEW_PROJECT
 } from "../actions/types";
 
 const initialState = [];
@@ -27,6 +28,9 @@ export default function(state = initialState, action) {
           name
         };
       });
+    }
+    case CREATE_NEW_PROJECT: {
+      return [...state, payload];
     }
     case DELETE_PROJECT: {
       const id = payload;

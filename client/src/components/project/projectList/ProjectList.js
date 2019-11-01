@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { connect } from "react-redux";
 import styled from "styled-components/macro";
 
@@ -49,14 +49,9 @@ const ProjectListUsersAndSettings = styled.div`
   display: flex;
 `;
 
-const ProjectList = ({ getCurrentUsersProjects, projects }) => {
-  const [isLoading, setIsLoading] = useState(true);
+const ProjectList = ({ projects }) => {
   const [showCreateProjectModal, setShowCreateProjectModal] = useState(false);
-
-  useEffect(() => {
-    getCurrentUsersProjects();
-    setIsLoading(false);
-  }, [getCurrentUsersProjects]);
+  const [shouldUpdate, setShouldUpdate] = useState(true);
 
   return (
     <Container>
@@ -68,7 +63,7 @@ const ProjectList = ({ getCurrentUsersProjects, projects }) => {
           <div>Settings</div>
         </ProjectListUsersAndSettings>
       </ProjectListDesc>
-      {!isLoading && (
+      {projects.length > 0 && shouldUpdate && (
         <ul>
           {projects.map((project, index) => (
             <ProjectListItem
@@ -87,6 +82,7 @@ const ProjectList = ({ getCurrentUsersProjects, projects }) => {
           isVisible={showCreateProjectModal}
           title={"Create a new project"}
           onClose={() => setShowCreateProjectModal(false)}
+          setShouldUpdate={setShouldUpdate}
         />
       )}
     </Container>

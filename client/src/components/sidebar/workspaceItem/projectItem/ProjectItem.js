@@ -1,17 +1,39 @@
 import React from "react";
 
-import { Item, ItemContent, ItemIcon, ItemName, ItemEditIcon } from "./styles";
+import {
+  Item,
+  ItemContent,
+  ItemIcon,
+  ItemName,
+  ItemEditIcon,
+  ItemLink,
+  ItemButton
+} from "./styles";
 
-const ProjectItem = ({ project }) => {
-  return (
+const ProjectItem = ({ projectId, project, onClick }) => {
+  return projectId ? (
     <Item>
-      <ItemContent>
-        <ItemIcon color={project.color}></ItemIcon>
-        <ItemName>{project.name}</ItemName>
-      </ItemContent>
-      <ItemEditIcon onClick={() => console.log("edit project details")}>
-        <i className="fas fa-ellipsis-h"></i>
-      </ItemEditIcon>
+      <ItemLink to={`/project/${projectId}`}>
+        <ItemContent>
+          <ItemIcon color={project.color}></ItemIcon>
+          <ItemName>{project.name}</ItemName>
+        </ItemContent>
+        <ItemEditIcon>
+          <i className="fas fa-long-arrow-alt-right"></i>
+        </ItemEditIcon>
+      </ItemLink>
+    </Item>
+  ) : (
+    <Item onClick={onClick}>
+      <ItemButton>
+        <ItemContent>
+          <ItemIcon color={project.color}></ItemIcon>
+          <ItemName>{project.name}</ItemName>
+        </ItemContent>
+        <ItemEditIcon>
+          <i className="fas fa-long-arrow-alt-right"></i>
+        </ItemEditIcon>
+      </ItemButton>
     </Item>
   );
 };

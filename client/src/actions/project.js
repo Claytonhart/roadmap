@@ -45,9 +45,13 @@ export const createNewProject = name => async dispatch => {
     console.log(res.data);
     const id = res.data._id;
 
+    // dispatch({
+    //   type: CREATE_NEW_PROJECT,
+    //   payload: id
+    // });
     dispatch({
       type: CREATE_NEW_PROJECT,
-      payload: id
+      payload: res.data
     });
 
     return id;

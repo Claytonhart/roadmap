@@ -28,7 +28,8 @@ const CreateProjectModal = ({
   onClose,
   history,
   createNewProject,
-  setAlert
+  setAlert,
+  setShouldUpdate
 }) => {
   const [formData, setFormData] = useState({
     projectTitle: "",
@@ -60,6 +61,7 @@ const CreateProjectModal = ({
     if (!projectTitle) {
       setAlert("Please add a project title", "red");
     } else {
+      setShouldUpdate(false);
       const id = await createNewProject(projectTitle);
       onClose();
       history.push(`/project/${id}`);
