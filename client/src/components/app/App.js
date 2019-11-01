@@ -19,6 +19,7 @@ import Register from "../auth/Register";
 import Login from "../auth/Login";
 import Alert from "../alert/Alert";
 import PrivateRoute from "../routes/PrivateRoute";
+import NotFound from "../notFound/NotFound";
 
 const AppContainer = styled.div`
   display: flex;
@@ -45,6 +46,7 @@ const App = () => {
             <PrivateRoute path="/project" component={Project} />
             <Route path="/register" component={Register} />
             <Route path="/login" component={Login} />
+            <Route component={NotFound} />
           </Switch>
         </AppContainer>
       </BrowserRouter>
