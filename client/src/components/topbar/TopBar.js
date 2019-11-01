@@ -22,6 +22,7 @@ const TopBarContainer = styled.div`
 const Profile = styled.div``;
 
 const ProfileName = styled.button`
+  text-transform: capitalize;
   color: ${props => props.theme.primary.grey};
   font-size: 16px;
   cursor: pointer;

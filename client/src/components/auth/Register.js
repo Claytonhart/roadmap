@@ -60,7 +60,7 @@ const Register = ({ setAlert, register, isAuthenticated }) => {
     if (password !== password2) {
       setAlert("Passwords do not match", "red");
     } else {
-      register({ name, email, password });
+      register({ name: name.toLowerCase(), email, password });
     }
   };
 

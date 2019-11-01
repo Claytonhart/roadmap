@@ -11,6 +11,7 @@ import {
   // CLEAR_PROFILE
 } from "./types";
 import setAuthToken from "../utils/setAuthToken";
+import generateUserColor from "../utils/generateUserColor";
 
 // Load User
 export const loadUser = () => async dispatch => {
@@ -40,13 +41,15 @@ export const loadUser = () => async dispatch => {
 
 // Register User
 export const register = ({ name, email, password }) => async dispatch => {
+  const color = generateUserColor();
+
   const config = {
     headers: {
       "Content-Type": "application/json"
     }
   };
 
-  const body = JSON.stringify({ name, email, password });
+  const body = JSON.stringify({ name, email, password, color });
 
   try {
     const res = await axios.post("/api/users", body, config);

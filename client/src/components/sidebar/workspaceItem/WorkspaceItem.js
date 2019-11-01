@@ -92,11 +92,11 @@ const WorkspaceItem = ({ index, title, id }) => {
           {/* object with .color and .name */}
           <ProjectItem
             projectId={id}
-            project={{ color: "blue", name: "Board" }}
+            project={{ color: "lightblue", name: "Board" }}
           />
           <ProjectItem
             onClick={editProject}
-            project={{ color: "red", name: "Project Details" }}
+            project={{ color: "pink", name: "Project Details" }}
           />
           {/* {projects.map((project, i) => (
             // project.name, .link, .color, .abilitytodelete

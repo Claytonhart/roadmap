@@ -42,7 +42,7 @@ router.post(
       }
 
       user = new User({
-        name,
+        name: name.toLowerCase(),
         email,
         password,
         color
@@ -83,7 +83,7 @@ router.post(
 // @access  Private
 router.get("/:id", auth, async (req, res) => {
   try {
-    const user = await User.findById(req.params.id).select("-password");
+    const user = await User.findById(req.params.id).select("-password -email");
     // returns null if no user
     res.json(user);
   } catch (err) {
@@ -100,7 +100,7 @@ router.get("/name/:name", auth, async (req, res) => {
     // search users by name starting with req.params.name
     // returns an object of users
     const users = await User.find({
-      name: { $regex: "^" + req.params.name }
+      name: { $regex: "^" + req.params.name.toLowerCase() }
     })
       .select("-password")
       .limit(5);
