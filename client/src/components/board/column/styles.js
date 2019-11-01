@@ -16,7 +16,7 @@ export const Container = styled.div`
 
 export const TaskList = styled.div`
   transition: background-color 0.2s ease;
-  background-color: ${props => (props.isDraggingOver ? "skyblue" : "inherit")};
+  background-color: ${props => (props.isDraggingOver ? "#f6f8f9" : "inherit")};
   flex-grow: 1;
   min-height: 100px;
 `;
