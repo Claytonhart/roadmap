@@ -1,7 +1,7 @@
-import React from "react";
-import { Link } from "react-router-dom";
-import styled from "styled-components/macro";
-import notFoundImage from "../../assets/images/Web_SVG.svg";
+import React from 'react';
+import { Link } from 'react-router-dom';
+import styled from 'styled-components/macro';
+import notFoundImage from '../../assets/images/Web_SVG.svg';
 
 const Container = styled.div`
   display: flex;
@@ -46,15 +46,15 @@ const NotFound = () => {
   return (
     <Container>
       <NotFoundHeader>
-        <NotFoundLogo as={Link} to="/">
+        <NotFoundLogo as={Link} to='/'>
           Roadmap
         </NotFoundLogo>
       </NotFoundHeader>
       <NotFoundContainer>
         <div>
-          <Image src={notFoundImage} alt="not-found" />
+          <Image src={notFoundImage} alt='not-found' />
           <h1>
-            <i className="fas fa-exclamation-triangle" /> Page Not Found
+            <i className='fas fa-exclamation-triangle' /> Page Not Found
           </h1>
           <p>Sorry, this page does not exist</p>
         </div>

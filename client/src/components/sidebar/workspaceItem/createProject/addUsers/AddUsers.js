@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from "react";
-import { connect } from "react-redux";
-import ReactTooltip from "react-tooltip";
-import axios from "axios";
-import styled from "styled-components/macro";
-import UsersSearch from "./UsersSearch";
+import React, { useState, useEffect } from 'react';
+import { connect } from 'react-redux';
+import ReactTooltip from 'react-tooltip';
+import axios from 'axios';
+import styled from 'styled-components/macro';
+import UsersSearch from './UsersSearch';
 
 const AddUsersContainer = styled.div`
   /*  */
@@ -32,7 +32,7 @@ const UserInitials = styled.div`
   margin-right: 8px;
   padding: 6px;
   border-radius: 50%;
-  background-color: ${props => (props.color ? props.color : "gainsboro")};
+  background-color: ${props => (props.color ? props.color : 'gainsboro')};
   color: #fff;
   cursor: pointer;
 `;
@@ -41,7 +41,7 @@ const AddUsersTooltip = styled.span`
   text-transform: capitalize;
 `;
 
-const AddUsers = ({ project, index }) => {
+const AddUsers = ({ project, users, index }) => {
   const { _id: id } = project;
   // ["users"], _id, name, date, __v = project
 
@@ -57,7 +57,7 @@ const AddUsers = ({ project, index }) => {
       setUserNames(tenUsers);
     };
     getUserNames();
-  }, [id]);
+  }, [id, users]);
 
   return (
     <AddUsersContainer>
@@ -82,10 +82,10 @@ const AddUsers = ({ project, index }) => {
             );
           })}
         <AddUsersListName onClick={() => setUsersSearch(true)}>
-          <UserInitials data-tip data-for="add-people">
-            <i className="fas fa-plus"></i>
+          <UserInitials data-tip data-for='add-people'>
+            <i className='fas fa-plus'></i>
           </UserInitials>
-          <ReactTooltip id="add-people">
+          <ReactTooltip id='add-people'>
             <span>Add people</span>
           </ReactTooltip>
         </AddUsersListName>
@@ -96,7 +96,8 @@ const AddUsers = ({ project, index }) => {
 };
 
 const mapStateToProps = (state, ownProps) => ({
-  project: state.projects[ownProps.index]
+  project: state.projects[ownProps.index],
+  users: state.projects[ownProps.index].users
 });
 
 export default connect(mapStateToProps)(AddUsers);

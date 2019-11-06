@@ -3,8 +3,9 @@ import {
   SET_PROJECTS_NAME,
   DELETE_PROJECT,
   CREATE_NEW_PROJECT,
-  ADD_USER_TO_PROJECT
-} from "../actions/types";
+  ADD_USER_TO_PROJECT,
+  ADD_USER_ALREADY_EXISTS
+} from '../actions/types';
 
 const initialState = [];
 
@@ -49,6 +50,9 @@ export default function(state = initialState, action) {
           users: [...project.users, user]
         };
       });
+    }
+    case ADD_USER_ALREADY_EXISTS: {
+      return state;
     }
     default:
       return state;

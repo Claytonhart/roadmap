@@ -1,12 +1,12 @@
-import React, { useState, useEffect } from "react";
-import { connect } from "react-redux";
-import { withRouter } from "react-router-dom";
-import axios from "axios";
+import React, { useState, useEffect } from 'react';
+import { connect } from 'react-redux';
+import { withRouter } from 'react-router-dom';
+import axios from 'axios';
 
-import { createNewProject } from "../../../actions/project";
-import ProjectItem from "./projectItem/ProjectItem";
+import { createNewProject } from '../../../actions/project';
+import ProjectItem from './projectItem/ProjectItem';
 
-import DropdownContainer from "../../dropdownContainer/DropdownContainer";
+import DropdownContainer from '../../dropdownContainer/DropdownContainer';
 
 import {
   Container,
@@ -18,11 +18,11 @@ import {
   WorkspaceItemIcon,
   WorkspaceItemPerson,
   DropDownContainerButton
-} from "./styles";
+} from './styles';
 
-import EditProjectModal from "./createProject/EditProjectModal";
+import EditProjectModal from './createProject/EditProjectModal';
 
-const WorkspaceItem = ({ index, title, id }) => {
+const WorkspaceItem = ({ index, title, id, users }) => {
   const [people, setPeople] = useState(null);
 
   const [showDropdown, setShowDropdown] = useState(false);
@@ -40,7 +40,7 @@ const WorkspaceItem = ({ index, title, id }) => {
       setPeople(threeUsers);
     };
     getUsers();
-  }, [id]);
+  }, [id, users]);
 
   const editProject = () => {
     setShowEditProjectModal(true);
@@ -53,10 +53,10 @@ const WorkspaceItem = ({ index, title, id }) => {
           <WorkspaceItemTitle>{title}</WorkspaceItemTitle>
           <WorkspaceItemIconContainer>
             <WorkspaceItemIcon
-              id="item-icon"
+              id='item-icon'
               onClick={() => setShowDropdown(true)}
             >
-              <i className="fas fa-ellipsis-h"></i>
+              <i className='fas fa-ellipsis-h'></i>
             </WorkspaceItemIcon>
             {showDropdown && (
               <DropdownContainer callback={setShowDropdown} show={showDropdown}>
@@ -92,11 +92,11 @@ const WorkspaceItem = ({ index, title, id }) => {
           {/* object with .color and .name */}
           <ProjectItem
             projectId={id}
-            project={{ color: "lightblue", name: "Board" }}
+            project={{ color: 'lightblue', name: 'Board' }}
           />
           <ProjectItem
             onClick={editProject}
-            project={{ color: "pink", name: "Project Details" }}
+            project={{ color: 'pink', name: 'Project Details' }}
           />
           {/* {projects.map((project, i) => (
             // project.name, .link, .color, .abilitytodelete
@@ -110,7 +110,7 @@ const WorkspaceItem = ({ index, title, id }) => {
           projectId={id}
           projectName={title}
           isVisible={showEditProjectModal}
-          title={"Project details"}
+          title={'Project details'}
           onClose={() => setShowEditProjectModal(false)}
         />
       )}
@@ -118,9 +118,13 @@ const WorkspaceItem = ({ index, title, id }) => {
   );
 };
 
+const mapStateToProps = (state, ownProps) => ({
+  users: state.projects[ownProps.index].users
+});
+
 export default withRouter(
   connect(
-    null,
+    mapStateToProps,
     { createNewProject }
   )(WorkspaceItem)
 );

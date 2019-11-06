@@ -1,10 +1,13 @@
-import axios from "axios";
+import axios from 'axios';
 import {
   GET_CURRENT_USERS_PROJECTS,
   SET_PROJECTS_NAME,
   DELETE_PROJECT,
-  ADD_USER_TO_PROJECT
-} from "./types";
+  ADD_USER_TO_PROJECT,
+  ADD_USER_ALREADY_EXISTS
+} from './types';
+
+import { setAlert } from './alert';
 
 export const getCurrentUsersProjects = () => async dispatch => {
   try {
@@ -53,9 +56,7 @@ export const deleteProject = id => async dispatch => {
 export const addUserToProject = (id, user, index) => async dispatch => {
   try {
     const body = { user };
-    const res = await axios.put(`/api/project/${id}/user`, body);
-    console.log(res.data);
-    debugger;
+    await axios.put(`/api/project/${id}/user`, body);
 
     dispatch({
       type: ADD_USER_TO_PROJECT,
@@ -65,6 +66,14 @@ export const addUserToProject = (id, user, index) => async dispatch => {
       }
     });
   } catch (err) {
-    console.log(err);
+    const errors = err.response.data.errors;
+
+    if (errors) {
+      errors.forEach(error => dispatch(setAlert(error.msg, 'red')));
+    }
+
+    dispatch({
+      type: ADD_USER_ALREADY_EXISTS
+    });
   }
 };

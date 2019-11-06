@@ -1,13 +1,13 @@
-import React, { useEffect, useState } from "react";
-import { connect } from "react-redux";
-import { Link } from "react-router-dom";
-import ReactTooltip from "react-tooltip";
-import styled, { css } from "styled-components/macro";
-import axios from "axios";
+import React, { useEffect, useState } from 'react';
+import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
+import ReactTooltip from 'react-tooltip';
+import styled, { css } from 'styled-components/macro';
+import axios from 'axios';
 
-import { deleteProject } from "../../../actions/projects";
-import DropdownContainer from "../../dropdownContainer/DropdownContainer";
-import EditProjectModal from "../../sidebar/workspaceItem/createProject/EditProjectModal";
+import { deleteProject } from '../../../actions/projects';
+import DropdownContainer from '../../dropdownContainer/DropdownContainer';
+import EditProjectModal from '../../sidebar/workspaceItem/createProject/EditProjectModal';
 
 const UserInitials = styled.div`
   display: flex;
@@ -23,7 +23,7 @@ const UserInitials = styled.div`
   margin-left: 8px;
   padding: 6px;
   border-radius: 50%;
-  background-color: ${props => (props.color ? props.color : "gainsboro")};
+  background-color: ${props => (props.color ? props.color : 'gainsboro')};
   color: #fff;
   cursor: pointer;
 `;
@@ -109,7 +109,7 @@ const ProjectListTooltip = styled.span`
   text-transform: capitalize;
 `;
 
-const ProjectListItem = ({ index, project, deleteProject }) => {
+const ProjectListItem = ({ index, project, deleteProject, users }) => {
   const { name, _id: id } = project;
 
   // color, _id, name, email, date, __v
@@ -125,7 +125,7 @@ const ProjectListItem = ({ index, project, deleteProject }) => {
       setUserNames(threeUsers);
     };
     getUsers();
-  }, [id]);
+  }, [id, users]);
 
   const editProject = () => {
     setShowModal(true);
@@ -165,13 +165,13 @@ const ProjectListItem = ({ index, project, deleteProject }) => {
           </ProjectListNames>
 
           <ProjectListItemIcon onClick={() => setShowDropdown(true)}>
-            <i className="fas fa-ellipsis-h"></i>
+            <i className='fas fa-ellipsis-h'></i>
           </ProjectListItemIcon>
           {showDropdown && (
             <DropdownContainer
               callback={setShowDropdown}
               show={showDropdown}
-              right="-150px"
+              right='-150px'
             >
               <DropDownContainerButton onClick={editProject}>
                 Project Settings
@@ -189,7 +189,7 @@ const ProjectListItem = ({ index, project, deleteProject }) => {
           projectId={id}
           projectName={name}
           isVisible={showModal}
-          title={"Project details"}
+          title={'Project details'}
           onClose={() => setShowModal(false)}
         />
       )}
@@ -197,7 +197,11 @@ const ProjectListItem = ({ index, project, deleteProject }) => {
   );
 };
 
+const mapStateToProps = (state, ownProps) => ({
+  users: state.projects[ownProps.index].users
+});
+
 export default connect(
-  null,
+  mapStateToProps,
   { deleteProject }
 )(ProjectListItem);

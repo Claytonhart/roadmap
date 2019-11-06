@@ -1,9 +1,9 @@
-import React, { useState } from "react";
-import { connect } from "react-redux";
-import { addUserToProject } from "../../../../../actions/projects";
-import { DebounceInput } from "react-debounce-input";
-import styled from "styled-components";
-import axios from "axios";
+import React, { useState } from 'react';
+import { connect } from 'react-redux';
+import { addUserToProject } from '../../../../../actions/projects';
+import { DebounceInput } from 'react-debounce-input';
+import styled from 'styled-components';
+import axios from 'axios';
 
 const UserInputSearch = styled(DebounceInput)`
   padding: 8px;
@@ -35,7 +35,6 @@ const UsersSearch = ({ index, id, addUserToProject }) => {
     // makeUserRequest(e.target.value);
     if (e.target.value) {
       const res = await axios.get(`/api/users/name/${e.target.value}`);
-      debugger;
       setUsers(res.data);
       console.log(res);
     } else {
@@ -48,7 +47,7 @@ const UsersSearch = ({ index, id, addUserToProject }) => {
     // const usersArray = [].push(userId);
     // call action addUser based on id
     await addUserToProject(id, userId, index);
-    console.log("adding user: " + userId);
+    console.log('adding user: ' + userId);
   };
 
   return (
@@ -58,7 +57,7 @@ const UsersSearch = ({ index, id, addUserToProject }) => {
         minLength={2}
         debounceTimeout={400}
         onChange={e => searchForUsers(e)}
-        placeholder="search users"
+        placeholder='search users'
       />
       {users.length > 0 && (
         <ul>
@@ -66,7 +65,7 @@ const UsersSearch = ({ index, id, addUserToProject }) => {
             <UsersElement key={user._id}>
               <p>
                 <UsersIcon onClick={() => addUser(i)}>
-                  <i className="fas fa-plus"></i>
+                  <i className='fas fa-plus'></i>
                 </UsersIcon>
                 {user.name}
               </p>

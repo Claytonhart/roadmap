@@ -1,34 +1,34 @@
-const express = require("express");
+const express = require('express');
 const router = express.Router();
-const ObjectId = require("mongoose").Types.ObjectId;
-const auth = require("../../middleware/auth");
+const ObjectId = require('mongoose').Types.ObjectId;
+const auth = require('../../middleware/auth');
 
-const Project = require("../../models/Project");
-const User = require("../../models/User");
+const Project = require('../../models/Project');
+const User = require('../../models/User');
 
 // @route   GET api/project
 // @desc    get a user's projects (no board state)
 // @access  Private
-router.get("/", auth, async (req, res) => {
+router.get('/', auth, async (req, res) => {
   // get all of current user's projects by most recently created
   const userId = new ObjectId(req.user.id);
   try {
     const projects = await Project.find({ users: userId })
-      .select("-board")
+      .select('-board')
       .sort({
         date: -1
       });
     res.json(projects);
   } catch (err) {
     console.error(err.message);
-    res.status(500).send("Server Error");
+    res.status(500).send('Server Error');
   }
 });
 
 // @route   POST api/project
 // @desc    create a new project
 // @access  Private
-router.post("/", auth, async (req, res) => {
+router.post('/', auth, async (req, res) => {
   // console.log(req.body);
   const userId = new ObjectId(req.user.id);
   const { name, board } = req.body;
@@ -45,42 +45,42 @@ router.post("/", auth, async (req, res) => {
     res.json(project);
   } catch (err) {
     console.error(err.message);
-    res.status(500).send("Server Error");
+    res.status(500).send('Server Error');
   }
 });
 
 // @route   DELETE api/project
 // @desc    create a new project
 // @access  Private
-router.delete("/:id", auth, async (req, res) => {
+router.delete('/:id', auth, async (req, res) => {
   try {
     // console.log(req.body);
     const project = await Project.findById(req.params.id);
 
     if (!project) {
-      return res.status(404).json({ msg: "Project not found" });
+      return res.status(404).json({ msg: 'Project not found' });
     }
 
     // Check if user is authenticated
     // Check if project.users does not include current user's id
     const userId = new ObjectId(req.user.id);
     if (!project.users.includes(userId)) {
-      return res.status(401).json({ msg: "User not authorized" });
+      return res.status(401).json({ msg: 'User not authorized' });
     }
 
     await project.remove();
 
-    res.json({ msg: "Project successfully deleted" });
+    res.json({ msg: 'Project successfully deleted' });
   } catch (err) {
     console.error(err.message);
-    res.status(500).send("Server Error");
+    res.status(500).send('Server Error');
   }
 });
 
 // @route   GET api/project/:id
 // @desc    get a project by id
 // @access  Public
-router.get("/:id", async (req, res) => {
+router.get('/:id', async (req, res) => {
   try {
     let project;
     // Check if the id is a 12 char string
@@ -90,30 +90,30 @@ router.get("/:id", async (req, res) => {
         project = await Project.findById(req.params.id);
       }
     } else {
-      return res.status(404).json({ msg: "Invalid object id" });
+      return res.status(404).json({ msg: 'Invalid object id' });
     }
     // const project = await Project.findById(req.params.id);
 
     if (!project) {
-      return res.status(404).json({ msg: "Project not found" });
+      return res.status(404).json({ msg: 'Project not found' });
     }
 
     res.json(project);
   } catch (err) {
     console.error(err.message);
-    res.status(500).send("Server Error");
+    res.status(500).send('Server Error');
   }
 });
 
 // @route   PUT api/project/:id/setColumnOrder
 // @desc    project route
 // @access  Public
-router.put("/:id/setColumnOrder", async (req, res) => {
+router.put('/:id/setColumnOrder', async (req, res) => {
   try {
     const project = await Project.findById(req.params.id);
 
     if (!project) {
-      return res.status(404).json({ msg: "Project not found" });
+      return res.status(404).json({ msg: 'Project not found' });
     }
 
     const { columnOrder } = req.body;
@@ -125,19 +125,19 @@ router.put("/:id/setColumnOrder", async (req, res) => {
     res.json(project);
   } catch (err) {
     console.error(err.message);
-    res.status(500).send("Server Error");
+    res.status(500).send('Server Error');
   }
 });
 
 // @route   PUT api/project/:id/setTaskInSameColumn
 // @desc    project route
 // @access  Public
-router.put("/:id/setTaskInSameColumn", async (req, res) => {
+router.put('/:id/setTaskInSameColumn', async (req, res) => {
   try {
     const project = await Project.findById(req.params.id);
 
     if (!project) {
-      return res.status(404).json({ msg: "Project not found" });
+      return res.status(404).json({ msg: 'Project not found' });
     }
 
     const { column } = req.body;
@@ -155,19 +155,19 @@ router.put("/:id/setTaskInSameColumn", async (req, res) => {
     res.json(project);
   } catch (err) {
     console.error(err.message);
-    res.status(500).send("Server Error");
+    res.status(500).send('Server Error');
   }
 });
 
 // @route   PUT api/project/:id/setTaskInNewColumn
 // @desc    project route
 // @access  Public
-router.put("/:id/setTaskInNewColumn", async (req, res) => {
+router.put('/:id/setTaskInNewColumn', async (req, res) => {
   try {
     const project = await Project.findById(req.params.id);
 
     if (!project) {
-      return res.status(404).json({ msg: "Project not found" });
+      return res.status(404).json({ msg: 'Project not found' });
     }
 
     const { startColumn, finishColumn } = req.body;
@@ -193,19 +193,19 @@ router.put("/:id/setTaskInNewColumn", async (req, res) => {
     res.json(project);
   } catch (err) {
     console.error(err.message);
-    res.status(500).send("Server Error");
+    res.status(500).send('Server Error');
   }
 });
 
 // @route   PUT api/project/:id/setColumnTitle
 // @desc    project route
 // @access  Public
-router.put("/:id/setColumnTitle", async (req, res) => {
+router.put('/:id/setColumnTitle', async (req, res) => {
   try {
     const project = await Project.findById(req.params.id);
 
     if (!project) {
-      return res.status(404).json({ msg: "Project not found" });
+      return res.status(404).json({ msg: 'Project not found' });
     }
 
     const { column, title } = req.body;
@@ -222,19 +222,19 @@ router.put("/:id/setColumnTitle", async (req, res) => {
     res.json(project);
   } catch (err) {
     console.error(err.message);
-    res.status(500).send("Server Error");
+    res.status(500).send('Server Error');
   }
 });
 
 // @route   PUT api/project/:id/setTaskTitle
 // @desc    project route
 // @access  Public
-router.put("/:id/setTaskTitle", async (req, res) => {
+router.put('/:id/setTaskTitle', async (req, res) => {
   try {
     const project = await Project.findById(req.params.id);
 
     if (!project) {
-      return res.status(404).json({ msg: "Project not found" });
+      return res.status(404).json({ msg: 'Project not found' });
     }
 
     const { task, content } = req.body;
@@ -251,19 +251,19 @@ router.put("/:id/setTaskTitle", async (req, res) => {
     res.json(project);
   } catch (err) {
     console.error(err.message);
-    res.status(500).send("Server Error");
+    res.status(500).send('Server Error');
   }
 });
 
 // @route   PUT api/project/:id/createNewTask
 // @desc    project route
 // @access  Public
-router.put("/:id/createNewTask", async (req, res) => {
+router.put('/:id/createNewTask', async (req, res) => {
   try {
     const project = await Project.findById(req.params.id);
 
     if (!project) {
-      return res.status(404).json({ msg: "Project not found" });
+      return res.status(404).json({ msg: 'Project not found' });
     }
 
     const { column, content, taskId } = req.body;
@@ -284,19 +284,19 @@ router.put("/:id/createNewTask", async (req, res) => {
     res.json(project);
   } catch (err) {
     console.error(err.message);
-    res.status(500).send("Server Error");
+    res.status(500).send('Server Error');
   }
 });
 
 // @route   DELETE api/project/:id/deleteTask/:columnId/:taskId
 // @desc    project route
 // @access  Public
-router.delete("/:id/deleteTask/:columnId/:taskId", async (req, res) => {
+router.delete('/:id/deleteTask/:columnId/:taskId', async (req, res) => {
   try {
     const project = await Project.findById(req.params.id);
 
     if (!project) {
-      return res.status(404).json({ msg: "Project not found" });
+      return res.status(404).json({ msg: 'Project not found' });
     }
 
     const taskId = req.params.taskId;
@@ -325,19 +325,19 @@ router.delete("/:id/deleteTask/:columnId/:taskId", async (req, res) => {
     res.json(project);
   } catch (err) {
     console.error(err.message);
-    res.status(500).send("Server Error");
+    res.status(500).send('Server Error');
   }
 });
 
 // @route   PUT api/project/:id/createColumn
 // @desc    project route
 // @access  Public
-router.put("/:id/createColumn", async (req, res) => {
+router.put('/:id/createColumn', async (req, res) => {
   try {
     const project = await Project.findById(req.params.id);
 
     if (!project) {
-      return res.status(404).json({ msg: "Project not found" });
+      return res.status(404).json({ msg: 'Project not found' });
     }
 
     const { columnId, title } = req.body;
@@ -357,19 +357,19 @@ router.put("/:id/createColumn", async (req, res) => {
     res.json(project);
   } catch (err) {
     console.error(err.message);
-    res.status(500).send("Server Error");
+    res.status(500).send('Server Error');
   }
 });
 
 // @route   DELETE api/project/:id/createColumn
 // @desc    project route
 // @access  Public
-router.delete("/:id/deleteColumn/:columnId", async (req, res) => {
+router.delete('/:id/deleteColumn/:columnId', async (req, res) => {
   try {
     const project = await Project.findById(req.params.id);
 
     if (!project) {
-      return res.status(404).json({ msg: "Project not found" });
+      return res.status(404).json({ msg: 'Project not found' });
     }
 
     const { columnId } = req.params;
@@ -408,14 +408,14 @@ router.delete("/:id/deleteColumn/:columnId", async (req, res) => {
     res.json(project);
   } catch (err) {
     console.error(err.message);
-    res.status(500).send("Server Error");
+    res.status(500).send('Server Error');
   }
 });
 
 // @route   GET api/project/:id/users
 // @desc    get a project's users
 // @access  Private
-router.get("/:id/users", auth, async (req, res) => {
+router.get('/:id/users', auth, async (req, res) => {
   try {
     let project;
     // Check if the id is a 12 char string
@@ -425,17 +425,17 @@ router.get("/:id/users", auth, async (req, res) => {
         project = await Project.findById(req.params.id);
       }
     } else {
-      return res.status(404).json({ msg: "Invalid object id" });
+      return res.status(404).json({ msg: 'Invalid object id' });
     }
     // const project = await Project.findById(req.params.id);
 
     if (!project) {
-      return res.status(404).json({ msg: "Project not found" });
+      return res.status(404).json({ msg: 'Project not found' });
     }
 
     const usersPromiseArray = project.users.map(async user => {
       const userName = await User.findById(new ObjectId(user)).select(
-        "-password"
+        '-password'
       );
       // returns null if no user
       return userName;
@@ -446,14 +446,14 @@ router.get("/:id/users", auth, async (req, res) => {
     res.json(userData);
   } catch (err) {
     console.error(err.message);
-    res.status(500).send("Server Error");
+    res.status(500).send('Server Error');
   }
 });
 
 // @route   PUT api/project/:id/users
 // @desc    add a user / users to a project
 // @access  Private
-router.put("/:id/user", auth, async (req, res) => {
+router.put('/:id/user', auth, async (req, res) => {
   try {
     const newUserId = new ObjectId(req.body.user);
 
@@ -465,15 +465,17 @@ router.put("/:id/user", auth, async (req, res) => {
         project = await Project.findById(req.params.id);
       }
     } else {
-      return res.status(404).json({ msg: "Invalid object id" });
+      return res.status(404).json({ msg: 'Invalid object id' });
     }
 
     if (!project) {
-      return res.status(404).json({ msg: "Project not found" });
+      return res.status(404).json({ msg: 'Project not found' });
     }
 
     if (project.users.includes(newUserId)) {
-      return res.status(304).json({ msg: "User is already in this project" });
+      return res
+        .status(400)
+        .json({ errors: [{ msg: 'User is already in this project' }] });
     }
 
     project.users = [...project.users, newUserId];
@@ -483,19 +485,19 @@ router.put("/:id/user", auth, async (req, res) => {
     res.json(project);
   } catch (err) {
     console.error(err.message);
-    res.status(500).send("Server Error");
+    res.status(500).send('Server Error');
   }
 });
 
 // @route   PUT api/project/:id/setProjectName
 // @desc    udpate a project's name by id
 // @access  Private
-router.put("/:id/setProjectName", auth, async (req, res) => {
+router.put('/:id/setProjectName', auth, async (req, res) => {
   try {
     const project = await Project.findById(req.params.id);
 
     if (!project) {
-      return res.status(404).json({ msg: "Project not found" });
+      return res.status(404).json({ msg: 'Project not found' });
     }
 
     const { name } = req.body;
@@ -507,7 +509,7 @@ router.put("/:id/setProjectName", auth, async (req, res) => {
     res.json(project);
   } catch (err) {
     console.error(err.message);
-    res.status(500).send("Server Error");
+    res.status(500).send('Server Error');
   }
 });
 
